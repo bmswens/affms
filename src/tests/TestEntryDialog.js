@@ -55,7 +55,8 @@ function cleanTime(time) {
 function TestEntryDialog(props) {
 
     const [entry, setEntry] = React.useState({
-        date: new Date()
+        date: new Date(),
+        official: false
     })
 
     const [people, setPeople] = React.useState([])
@@ -83,10 +84,11 @@ function TestEntryDialog(props) {
             age: entry.testee?.getAge(),
             gender: entry.testee?.gender,
             firstname: entry.testee?.firstname,
-            lastname: entry.testee?.lastname
+            lastname: entry.testee?.lastname,
+            official: entry.official
         }
         for (let key in output) {
-            if (!output[key]) {
+            if (output[key] === undefined) {
                 return false
             }
         }
@@ -174,7 +176,7 @@ function TestEntryDialog(props) {
                         <Select
                             labelId="official-label"
                             id="offial-select"
-                            value={entry.official || ''}
+                            value={entry.official || false}
                             onChange={(event) => {
                                 setEntry({
                                     ...entry,

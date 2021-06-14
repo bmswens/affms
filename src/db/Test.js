@@ -16,7 +16,8 @@ class Test {
             'gender',
             'run',
             'push',
-            'sit'
+            'sit',
+            'official'
         ]
         for (let key of required) {
             if (object[key] === undefined) {

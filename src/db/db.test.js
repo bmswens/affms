@@ -102,7 +102,8 @@ const testInput = {
     age: 24,
     firstname: "John",
     lastname: "Doe",
-    date: now
+    date: now,
+    official: true
 }
 
 describe('The Test Object', function() {

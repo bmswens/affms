@@ -10,7 +10,7 @@ import Test from './Test'
 
 const db = new Dexie('affms')
 db.version(1).stores({
-    tests: '++id, date, gender, age, push, pushPoints, sit, sitPoints, run, runPoints, score, pass, [firstname+lastname]',
+    tests: '++id, date, official, gender, age, push, pushPoints, sit, sitPoints, run, runPoints, score, pass, [firstname+lastname]',
     people: '[firstname+lastname], birthdate, gender, height, weight, rank, organization',
     run: '++id, gender, ageLow, ageHigh, countLow, countHigh, score',
     push: '++id, gender, ageLow, ageHigh, countLow, countHigh, score',
@@ -109,12 +109,15 @@ const TestTable = {
         return tests 
     },
     getByPerson: async function(person, officialOnly=false) {
-        let tests
+        let tests = await db.tests.where({firstname: person.firstname, lastname: person.lastname}).toArray()
         if (officialOnly) {
-            tests = await db.tests.where({firstname: person.firstname, lastname: person.lastname, official: true}).toArray()
+            tests = tests.filter(test => {
+                if (test.official) {
+                    return test
+                }
+            })
         }
         else {
-            tests = await db.tests.where({firstname: person.firstname, lastname: person.lastname}).toArray()
         }
         tests = tests.sort(sortByDate)
         return tests

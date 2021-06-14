@@ -258,9 +258,9 @@ function FitnessHistoryChart(props) {
     let scores = []
     for (let test of tests) {
         dates.push(test.date)
-        runPoints.push(test.runPoints)
-        pushPoints.push(test.pushPoints)
-        sitPoints.push(test.sitPoints)
+        runPoints.push(test.runScore)
+        pushPoints.push(test.pushScore)
+        sitPoints.push(test.sitScore)
         scores.push(test.score)
     }
 
@@ -327,7 +327,8 @@ function FitnessHistoryChart(props) {
             }
         },
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: true,
+        aspectRatio: 3
     }
 
 
@@ -512,7 +513,7 @@ function FitnessHistoryGrid(props) {
             type: 'number',
         },
         {
-            field: "totalScore",
+            field: "score",
             headerName: "Composite Score",
             flex: 1,
             type: 'number',
