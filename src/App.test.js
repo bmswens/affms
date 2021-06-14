@@ -1,9 +1,16 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+// React
+import React from 'react'
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+// testing library
+import {
+    render,
+} from '@testing-library/react'
+
+// to test
+import App from './App'
+
+describe('<App>', function() {
+    it('should render without fail', function() {
+        render(<App />)
+    })
+})

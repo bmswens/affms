@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "AFFMS",
+  "name": "Air Force Fitness Mock System",
   "icons": [
     {
       "src": "favicon.ico",
