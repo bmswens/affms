@@ -20,6 +20,7 @@ import DateFnsUtils from '@date-io/date-fns'
 
 // Custom
 import db from '../db/db'
+import Test from '../db/Test'
 import FeedbackDialog from './FeedbackDialog'
 
 
@@ -40,12 +41,12 @@ function cleanTime(time) {
         return 'exempt'
     }
     else if (String(time).split(':').length !== 2) {
-        return false
+        return undefined
     }
     let checkTime = String(time).split(':')
     for (let t of checkTime) {
         if (!Number.isInteger(Number(t)) || Number(t) > 60) {
-            return false
+            return undefined
         }
     }
     return time
@@ -60,10 +61,19 @@ function TestEntryDialog(props) {
     })
 
     const [people, setPeople] = React.useState([])
+    const [status, setStatus] = React.useState('loading')
 
     async function load() {
         let tempPeople = await db.PersonTable.all()
+        tempPeople.unshift({
+            firstname: 'Ad',
+            lastname: 'Hoc',
+            getAge: function() {
+                return this.age
+            }
+        })
         setPeople(tempPeople)
+        setStatus('loaded')
     }
 
     React.useEffect(() => {
@@ -107,13 +117,18 @@ function TestEntryDialog(props) {
             ...cleanEntry(),
         }
         let lastTest = {}
-        if (entry.testee !== 'ad hoc') {
+        let thisTest = {}
+        if (entry.testee?.firstname !== 'Ad' && entry.testee?.lastname !== 'Hoc') {
             let previousTests = await db.TestTable.getByPerson(entry.testee)
             if (previousTests.length) {
                 lastTest = previousTests[previousTests.length - 1]
             }
+            thisTest = await db.TestTable.add(data)
         }
-        let thisTest = await db.TestTable.add(data)
+        else {
+            thisTest = new Test(data)
+            await thisTest.calculateScore()
+        }
         setEntry({
             date: new Date()
         })
@@ -123,8 +138,70 @@ function TestEntryDialog(props) {
         setFeedbackOpen(true)
     }
 
+    const [genderField, setGenderField] = React.useState(null)
+    const [ageField, setAgeField] = React.useState(null)
+    React.useEffect(() => {
+        if (entry.testee?.firstname === 'Ad' && entry.testee?.lastname == 'Hoc') {
+            setGenderField((
+                <FormControl variant="outlined" fullWidth required style={{ marginTop: 7 }}>
+                    <InputLabel id="gender-label">Gender</InputLabel>
+                    <Select
+                        aria-labelledby="gender-label"
+                        aria-label="Gender"
+                        id="gender-select"
+                        value={entry.testee?.gender || ''}
+                        onChange={(event) => {
+                            setEntry({
+                                ...entry,
+                                testee: {
+                                    ...entry.testee,
+                                    gender: event.target.value
+                                }
+                            })
+                        }}
+                        label="Gender"
+                    >
+                        <MenuItem value={'male'}>Male</MenuItem>
+                        <MenuItem value={'female'}>Female</MenuItem>
+                    </Select>
+                </FormControl>
+            ))
+            setAgeField((
+                <TextField
+                    required
+                    style={{ marginTop: 7 }}
+                    variant="outlined"
+                    label="Age"
+                    id="age-field"
+                    fullWidth
+                    value={entry.testee?.age || ''}
+                    onChange={(event) => {
+                        setEntry({
+                            ...entry,
+                            testee: {
+                                ...entry.testee,
+                                age: event.target.value
+                            }
+                        })
+                    }}
+                    error={Boolean(entry.testee?.age) && Number.isNaN(Number(entry.testee?.age))}
+                />
+            ))
+        }
+        else {
+            setGenderField(null)
+            setAgeField(null)
+        }
+    }, [entry])
+
     return (
         <React.Fragment>
+            <div
+                data-testid="test-entry-status"
+                style={{ display: "none" }}
+            >
+                {status}
+            </div>
             <Dialog
                 fullWidth
                 onClose={handleClose}
@@ -151,6 +228,8 @@ function TestEntryDialog(props) {
                             })
                         }}
                     />
+                    {genderField}
+                    {ageField}
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
                             margin="normal"

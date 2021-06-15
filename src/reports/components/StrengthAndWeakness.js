@@ -51,7 +51,6 @@ function StrengthAndWeakness(props) {
         let total = scores[component].reduce((accumulator, current) => accumulator + current, 0);
         let average = total / scores[component].length;
         let asPercentage = (average / maxPoints[component]) * 100;
-        console.log(component, average, maxPoints[component], asPercentage)
         if (asPercentage > strongest.value) {
             strongest.label = labels[component];
             strongest.value = asPercentage;

@@ -10,6 +10,8 @@ import {
     render,
     fireEvent,
     waitFor,
+    within,
+    prettyDOM
 } from '@testing-library/react'
 
 // to test
@@ -33,11 +35,16 @@ describe('<TestEntryDialog>', function () {
             expect(list.length).toEqual(1)
         })
     })
+    afterAll(async () => {
+        await db.PersonTable.clear()
+    })
     beforeEach(async () => {
         render(<TestEntryDialog open={true} setOpen={() => jest.fn()}/>)
-        let input = screen.getByRole('textbox', {name: "Test Taker"})
-        fireEvent.change(input, {target: {value: "John"}})
-        expect(await screen.findByText(/John Doe/)).toBeInTheDocument()
+        await waitFor(async () => {
+            let statusContainer = screen.getByTestId('test-entry-status')
+            let status = within(statusContainer).queryByText('loaded')
+            expect(status).not.toBeNull()
+        })
     })
     it('should have textboxes for the freeform fields', async function () {
         let fields = [
@@ -89,6 +96,95 @@ describe('<TestEntryDialog>', function () {
         await waitFor(async () => {
             let tests = await db.TestTable.all()
             expect(tests.length).toEqual(1)
+        })
+    })
+})
+
+describe('<TestEntryDialog /> Ad Hoc', function() {
+    function selectAdHoc() {
+        let autoComplete = screen.getByRole('textbox', {name: "Test Taker"})
+        autoComplete.focus()
+        fireEvent.change(autoComplete, {target: {value: "Ad"}})
+        fireEvent.keyDown(autoComplete, {key: "ArrowDown"})
+        fireEvent.keyDown(autoComplete, {key: 'Enter'})
+    }
+    beforeEach(async () => {
+        render(<TestEntryDialog open={true} setOpen={() => jest.fn()}/>)
+        await waitFor(async () => {
+            let statusContainer = screen.getByTestId('test-entry-status')
+            let status = within(statusContainer).queryByText('loaded')
+            expect(status).not.toBeNull()
+        })
+        selectAdHoc()
+    })
+    it('should open up the name and gender field when "Ad Hoc" is selected', async function() {
+        await waitFor(() => {
+            let ageField = screen.getByRole('textbox', {name: 'Age'})
+            expect(ageField).not.toBeNull()
+            let genderField = screen.queryByLabelText('Gender')
+            expect(genderField).not.toBeNull()
+        })
+    })
+    it('should require the two new fields before being able to submit', function() {
+        let submissions = [
+            {
+                field: "Push-ups",
+                value: 52
+            },
+            {
+                field: "Sit-ups",
+                value: 58
+            },
+            {
+                field: "Run Time",
+                value: "09:10"
+            }
+        ]
+        let submitButton = screen.getByRole('button', {name: 'Submit'})
+        for (let submission of submissions) {
+            expect(submitButton.disabled).toBeTruthy()
+            let input = screen.getByRole('textbox', {name: submission.field})
+            fireEvent.change(input, {target: {value: submission.value}})
+        }
+        expect(submitButton.disabled).toBeTruthy()
+        let ageField = screen.getByRole('textbox', {name: 'Age'})
+        fireEvent.change(ageField, {target: { value: 18}})
+        expect(submitButton.disabled).toBeTruthy()
+        let genderField = screen.queryByLabelText('Gender')
+        fireEvent.change(genderField.querySelector('input'), {target: { value: 'male'}})
+        expect(submitButton.disabled).not.toBeTruthy()
+    })
+    it('should be able to submit ad hoc', async function() {
+        let submissions = [
+            {
+                field: "Push-ups",
+                value: 52
+            },
+            {
+                field: "Sit-ups",
+                value: 58
+            },
+            {
+                field: "Run Time",
+                value: "09:10"
+            }
+        ]
+        let submitButton = screen.getByRole('button', {name: 'Submit'})
+        for (let submission of submissions) {
+            expect(submitButton.disabled).toBeTruthy()
+            let input = screen.getByRole('textbox', {name: submission.field})
+            fireEvent.change(input, {target: {value: submission.value}})
+        }
+        expect(submitButton.disabled).toBeTruthy()
+        let ageField = screen.getByRole('textbox', {name: 'Age'})
+        fireEvent.change(ageField, {target: { value: 18}})
+        expect(submitButton.disabled).toBeTruthy()
+        let genderField = screen.queryByLabelText('Gender')
+        fireEvent.change(genderField.querySelector('input'), {target: { value: 'male'}})
+        expect(submitButton.disabled).not.toBeTruthy()
+        fireEvent.click(submitButton)
+        await waitFor(async () => {
+            expect(screen.queryByText(/Test Results/)).not.toBeNull()
         })
     })
 })
