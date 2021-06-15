@@ -14,17 +14,17 @@ const lineColorFunctions = {
     compositeScore: function (context) {
         let index = context.dataIndex
         let value = context.dataset.data[index]
-        return value >= 75 ? "green" : value == undefined ? "green" : "red"
+        return value >= 75 ? "green" : value === undefined ? "green" : "red"
     },
     runScore: function (context) {
         let index = context.dataIndex
         let value = context.dataset.data[index]
-        return value >= 42.3 ? "green" : value == undefined ? "green" : "red"
+        return value >= 42.3 ? "green" : value === undefined ? "green" : "red"
     },
     upScore: function (context) {
         let index = context.dataIndex
         let value = context.dataset.data[index]
-        return value >= 10 ? "green" : value == undefined ? "green" : "red"
+        return value >= 10 ? "green" : value === undefined ? "green" : "red"
     }
 }
 

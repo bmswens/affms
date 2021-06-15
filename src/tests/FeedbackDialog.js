@@ -3,7 +3,7 @@ import React from 'react';
 
 // Material UI
 import Dialog from '@material-ui/core/Dialog';
-import { Button, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@material-ui/core';
+import { Button, DialogActions, DialogContent, DialogTitle, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -15,7 +15,6 @@ import TrendingDownIcon from '@material-ui/icons/TrendingDown';
 
 // Chart
 import { Pie } from 'react-chartjs-2'
-import { TrendingUp } from '@material-ui/icons';
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 function PointsChart(props) {
-    let { title, points, total } = props
+    let { points, total } = props
     let remainder = total - points
 
     const options = {
@@ -84,7 +83,7 @@ function TrendingIcon(props) {
     }
     else {
         return (
-            <TrendingUp className={classes.trendingIcon} style={{ color: "green" }} />
+            <TrendingUpIcon className={classes.trendingIcon} style={{ color: "green" }} />
         )
     }
 }

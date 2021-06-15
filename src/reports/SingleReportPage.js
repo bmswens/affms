@@ -56,7 +56,6 @@ function SingleReport(props) {
         if (target !== null) {
             load()
         }
-
     }, [target, officialOnly])
 
     if (target === null) {

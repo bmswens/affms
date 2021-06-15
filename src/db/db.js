@@ -143,7 +143,7 @@ function sortByDate(a, b) {
     return a.date - b.date
 }
 
-export default {
+const DB = {
     PersonTable: PersonTable,
     RunScoresheet: RunScoresheet,
     PushScoresheet: PushScoresheet,
@@ -151,3 +151,5 @@ export default {
     TestTable: TestTable,
     ready: ready
 }
+
+export default DB
