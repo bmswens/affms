@@ -8,7 +8,6 @@ import {
     fireEvent,
     waitFor,
     within,
-    act
 } from '@testing-library/react'
 
 // setup our person
@@ -16,8 +15,16 @@ import { subYears } from 'date-fns'
 import db from '../db/db'
 
 // to test
-import SingleReportPage from './SingleReport'
-import { SingleReport } from './SingleReport'
+import SingleReportPage from './SingleReportPage'
+import { SingleReport } from './SingleReportPage'
+
+async function waitForLoad() {
+    let statusContainer = screen.getByTestId('single-report-status')
+    return await waitFor(async () => {
+        let status = within(statusContainer).getByText('loaded')
+        expect(status).not.toBeNull()
+    })
+}
 
 describe('<SingleReport /> with 2+ entries', function() {
     beforeAll(async () => {
@@ -55,7 +62,7 @@ describe('<SingleReport /> with 2+ entries', function() {
         await db.PersonTable.clear()
         await db.TestTable.clear()
     })
-    beforeEach(() => {
+    beforeEach(async () => {
         render(
             <SingleReport
                 target={
@@ -66,6 +73,7 @@ describe('<SingleReport /> with 2+ entries', function() {
                 }
             />
         )
+        await waitForLoad()
     })
     it('should tell this member that they are current', async function() {
         await waitFor(async () => {
@@ -100,7 +108,7 @@ describe('<SingleReport /> with 1 entry', function() {
         await db.PersonTable.clear()
         await db.TestTable.clear()
     })
-    beforeEach(() => {
+    beforeEach(async () => {
         render(
             <SingleReport
                 target={
@@ -111,6 +119,7 @@ describe('<SingleReport /> with 1 entry', function() {
                 }
             />
         )
+        await waitForLoad()
     })
     it('should tell the member they are overdue', async function() {
         await waitFor(async () => {
@@ -121,7 +130,7 @@ describe('<SingleReport /> with 1 entry', function() {
 })
 
 describe('<SingleReport /> with 0 entries', function() {
-    beforeEach(() => {
+    beforeEach(async () => {
         render(
             <SingleReport
                 target={
@@ -132,6 +141,7 @@ describe('<SingleReport /> with 0 entries', function() {
                 }
             />
         )
+        await waitForLoad()
     })
     it('should tell them they are due', async function() {
         await waitFor(async () => {
@@ -174,6 +184,7 @@ describe('<SingleReportPage />', function() {
         let options = screen.getByRole('presentation')
         let johnny = within(options).getByText(/Jonathan/)
         fireEvent.click(johnny)
+        await waitForLoad()
         await waitFor(async () => {
             let text = screen.queryByText(/Due Now/)
             expect(text).not.toBeNull()

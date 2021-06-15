@@ -11,7 +11,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import TopNav from './TopNav'
 import Homepage from './Homepage'
 import PersonList from './people/PeoplePage'
-import SingleReportPage from './reports/SingleReport'
+import SingleReportPage from './reports/SingleReportPage'
 
 
 function App() {

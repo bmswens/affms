@@ -39,7 +39,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --coverage",
+    "test": "react-scripts test --coveragePathIgnorePatterns /src/index.js /src/service.*.js /src/reportWebVitals.js --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

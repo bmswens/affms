@@ -13,14 +13,12 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import db from '../db/db'
 
 // smaller pieces
-import {
-    DueDisplay,
-    LevelDisplay,
-    PointDisplay,
-    FitnessHistoryChart,
-    FitnessHistoryGrid,
-    StrengthAndWeakness
-} from './SingleReportComponents'
+import FitnessHistoryGrid from "./components/FitnessHistoryGrid";
+import StrengthAndWeakness from "./components/StrengthAndWeakness";
+import FitnessHistoryChart from "./components/FitnessHistoryChart";
+import PointDisplay from "./components/PointDisplay";
+import LevelDisplay from "./components/LevelDisplay";
+import DueDisplay from "./components/DueDisplay";
 
 function SingleReport(props) {
 
@@ -28,6 +26,7 @@ function SingleReport(props) {
     const [tests, setTests] = React.useState([])
     const [mostRecent, setMostRecent] = React.useState({})
     const [penultimate, setPenultimate] = React.useState({})
+    const [status, setStatus] = React.useState('loading')
 
     async function load() {
         let allTests = await db.TestTable.getByPerson(target, officialOnly)
@@ -50,6 +49,7 @@ function SingleReport(props) {
         else {
             setTests([])
         }
+        setStatus('loaded')
     }
 
     React.useEffect(() => {
@@ -71,6 +71,12 @@ function SingleReport(props) {
                 align="center"
                 style={{ marginTop: 5, paddingLeft: 7, paddingRight: 7 }} 
             >
+                <div
+                    data-testid="single-report-status"
+                    style={{display: "none"}}
+                >
+                    {status}
+                </div>
                 <DueDisplay
                     nextDue={mostRecent.nextDue}
                 />
