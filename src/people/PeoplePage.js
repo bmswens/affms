@@ -6,10 +6,13 @@ import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography';
+import { CardActions } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton'
 
 // Icons
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 // db
 import db from '../db/db'
@@ -37,7 +40,7 @@ function NewPersonCard(props) {
                     align="center" 
                     justifyitems="center"
                 >
-                    <CardContent role="button" onClick={() => setOpen(true)} >
+                    <CardContent role="button" onClick={() => setOpen(true)} aria-label="Add New Person">
                         <AddCircleOutlineIcon
                             style={{fontSize: 125}}
                         />
@@ -56,7 +59,18 @@ function NewPersonCard(props) {
 
 function PersonCard(props) {
 
-    const { person } = props
+    const { person, refresh } = props
+
+    const [deleted, setDeleted] = React.useState(false)
+    async function handleDelete() {
+        await db.PersonTable.delete(person)
+        setDeleted(true)
+        refresh()
+    }
+
+    if (deleted) {
+        return null
+    }
 
     return (
         <Grid item xs={12} md={6} lg={4} >
@@ -80,6 +94,14 @@ function PersonCard(props) {
                         Age: {person.getAge()}
                     </Typography>
                 </CardContent>
+                <CardActions>
+                        <IconButton
+                            onClick={handleDelete}
+                            aria-label={`Delete ${person.firstname} ${person.lastname} `}
+                        >
+                            <DeleteForeverIcon />
+                        </IconButton>
+                </CardActions>
             </Card>
         </Grid>
 
@@ -94,8 +116,12 @@ function PeoplePage(props) {
 
     async function load() {
         let people = await db.PersonTable.all()
-        let cards = people.map(person =>  <PersonCard person={person} key={`${person.firstname}-${person.lastname}`} />)
+        let cards = people.map(person =>  <PersonCard person={person} key={`${person.firstname}-${person.lastname}`} refresh={refresh} />)
         setPeopleCards(cards)
+    }
+
+    function refresh() {
+        setReload(reload + 1)
     }
 
     React.useEffect(() => {
@@ -106,7 +132,7 @@ function PeoplePage(props) {
         <Grid container spacing={1} justify="center" alignItems="stretch" style={{ marginTop: 5, paddingLeft: 7, paddingRight: 7 }}>
             {peopleCards}
             <NewPersonCard
-                callback={() => {setReload(reload + 1)}}
+                callback={refresh}
             />
         </Grid>
     )

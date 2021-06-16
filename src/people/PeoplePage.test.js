@@ -46,14 +46,16 @@ describe('<PeoplePage>', function () {
         })
     })
     it('render without fail', async function () {
-        let addPersonCard = screen.queryByRole('button')
+        let addPersonCard = screen.queryByRole('button', {name: 'Add New Person'})
         expect(addPersonCard).not.toBeNull()
     })
 })
 
 describe('<PersonCard > with person', function () {
+    let body
     beforeEach(() => {
-        render(<PersonCard person={member} />)
+        let { container } = render(<PersonCard person={member} refresh={() => jest.fn()} />)
+        body = container
     })
     it('should display all their relevant info', function () {
         let data = [
@@ -67,6 +69,13 @@ describe('<PersonCard > with person', function () {
             expect(text).not.toBeNull()
         }
     })
+    it('should have a functional delete button', async function() {
+        let deleteButton = screen.getByRole('button', {name: `Delete ${member.firstname} ${member.lastname}`})
+        fireEvent.click(deleteButton)
+        await waitFor(() => {
+            expect(body.children.length).toEqual(0)
+        })
+    })
 })
 
 describe('<NewPersonCard />', function () {
@@ -76,7 +85,7 @@ describe('<NewPersonCard />', function () {
     it('should open the <PersonDialog> when clicked', async function () {
         let dialog = screen.queryByRole('dialog')
         expect(dialog).toBeNull()
-        let card = screen.getByRole('button')
+        let card = screen.getByRole('button', {name: 'Add New Person'})
         fireEvent.click(card)
         await waitFor(() => {
             dialog = screen.queryByRole('dialog')
