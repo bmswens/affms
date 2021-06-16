@@ -184,7 +184,7 @@ describe('<TestEntryDialog /> Ad Hoc', function() {
         expect(submitButton.disabled).not.toBeTruthy()
         fireEvent.click(submitButton)
         await waitFor(async () => {
-            expect(screen.queryByText(/Test Results/)).not.toBeNull()
+            expect(screen.queryByText(/Results/)).not.toBeNull()
         })
     })
 })

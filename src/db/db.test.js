@@ -52,7 +52,7 @@ describe('The Person Object', function () {
 })
 
 describe('The Person Table', function () {
-    beforeEach(async () => {
+    afterEach(async () => {
         await db.PersonTable.clear()
     })
     it('should allow the user to read and write people to the database', async function () {
@@ -88,6 +88,15 @@ describe('The Person Table', function () {
         people[0].save()
         people = await db.PersonTable.query({firstname: "John", lastname: "Doe"})
         expect(people[0].height).toEqual(72)
+    })
+    it('should delete a person and cascade delete their tests', async function() {
+        await db.PersonTable.add(person)
+        expect(await db.PersonTable.all()).toHaveLength(1)
+        await db.TestTable.add(testInput)
+        expect(await db.TestTable.all()).toHaveLength(1)
+        await db.PersonTable.delete(person)
+        expect(await db.PersonTable.all()).toHaveLength(0)
+        expect(await db.TestTable.all()).toHaveLength(0)
     })
 })
 

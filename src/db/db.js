@@ -81,6 +81,11 @@ const PersonTable = {
     },
     clear: async function() {
         await db.people.clear()
+    },
+    delete: async function(person) {
+        let { firstname, lastname } = person
+        await db.people.where({firstname, lastname}).delete()
+        await db.tests.where({firstname, lastname}).delete()
     }
 }
 
