@@ -40,7 +40,7 @@ function NewPersonCard(props) {
                     align="center" 
                     justifyitems="center"
                 >
-                    <CardContent role="button" onClick={() => setOpen(true)} aria-label="Add New Person">
+                    <CardContent role="button" onClick={() => setOpen(true)} aria-label="Add New Person" >
                         <AddCircleOutlineIcon
                             style={{fontSize: 125}}
                         />
@@ -95,11 +95,12 @@ function PersonCard(props) {
                     </Typography>
                 </CardContent>
                 <CardActions>
+                    <dif style={{flexGrow: 1}} />
                         <IconButton
                             onClick={handleDelete}
                             aria-label={`Delete ${person.firstname} ${person.lastname} `}
                         >
-                            <DeleteForeverIcon />
+                            <DeleteForeverIcon fontSize="large" />
                         </IconButton>
                 </CardActions>
             </Card>
