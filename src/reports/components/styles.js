@@ -17,6 +17,14 @@ export const useStyles = makeStyles((theme) => ({
     },
     card: {
         height: "100%"
+    },
+    trendingIcon: {
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 48
+        },
+        [theme.breakpoints.up('md')]: {
+            fontSize: 64
+        }
     }
 }))
 

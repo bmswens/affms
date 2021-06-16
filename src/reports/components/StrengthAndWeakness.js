@@ -78,6 +78,7 @@ function StrengthAndWeakness(props) {
                     <CardContent>
                         <Typography
                             aria-labelledby="StrongestComponentHeader"
+                            variant="h3"
                         >
                             {strongest.label}
                         </Typography>
@@ -92,6 +93,7 @@ function StrengthAndWeakness(props) {
                     <CardContent>
                         <Typography
                             aria-labelledby="WeakestComponentHeader"
+                            variant="h3"
                         >
                             {weakest.label}
                         </Typography>

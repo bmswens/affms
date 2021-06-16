@@ -104,7 +104,7 @@ function PointsDisplay(props) {
             </Grid>
             <Grid item xs={7}>
                 <Typography variant={isSmall ? "h2" : "h1"} style={{ color: newPoints > minPoints ? "green" : "red" }}>
-                    {newPoints}
+                    {newPoints.toFixed(1)}
                     <TrendingIcon
                         newPoints={newPoints}
                         oldPoints={oldPoints}
@@ -140,8 +140,8 @@ function FeedbackDialog(props) {
             scroll="body"
         >
             <DialogTitle>
-                <Typography align="center">
-                    Test Results
+                <Typography align="center" variant="h4">
+                    Results
                 </Typography>
             </DialogTitle>
             <DialogContent align="center" >

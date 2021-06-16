@@ -17,14 +17,14 @@ function TrendingIcon(props) {
     const classes = useStyles()
     const { newValue, oldValue } = props
 
-    if (!oldValue) {
+    if (oldValue === undefined) {
         return null
     }
     else if (newValue > oldValue) {
         return (
             <TrendingUpIcon
                 titleAccess="Trending Up Icon"
-                className={classes.current}
+                className={`${classes.current} ${classes.trendingIcon}`}
             />
         )
     }
@@ -32,13 +32,16 @@ function TrendingIcon(props) {
         return (
             <TrendingDownIcon
                 titleAccess="Trending Down Icon"
-                className={classes.overdue}
+                className={`${classes.overdue} ${classes.trendingIcon}`}
             />
         )
     }
     else {
         return (
-            <TrendingFlatIcon titleAccess="Trending Flat Icon"/>
+            <TrendingFlatIcon
+                titleAccess="Trending Flat Icon" 
+                className={classes.trendingIcon} 
+            />
         )
     }
 }
@@ -91,7 +94,7 @@ function PointDisplay(props) {
                         variant: "h5"
                     }} />
                 <CardContent>
-                    <Typography variant="h3">
+                    <Typography variant="h2">
                         {contentDisplay}{trendDisplay}
                     </Typography>
                 </CardContent>

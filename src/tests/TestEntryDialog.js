@@ -141,7 +141,7 @@ function TestEntryDialog(props) {
     const [genderField, setGenderField] = React.useState(null)
     const [ageField, setAgeField] = React.useState(null)
     React.useEffect(() => {
-        if (entry.testee?.firstname === 'Ad' && entry.testee?.lastname == 'Hoc') {
+        if (entry.testee?.firstname === 'Ad' && entry.testee?.lastname === 'Hoc') {
             setGenderField((
                 <FormControl variant="outlined" fullWidth required style={{ marginTop: 7 }}>
                     <InputLabel id="gender-label">Gender</InputLabel>
