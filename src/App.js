@@ -12,6 +12,7 @@ import TopNav from './TopNav'
 import Homepage from './Homepage'
 import PersonList from './people/PeoplePage'
 import SingleReportPage from './reports/SingleReportPage'
+import Footer from './Footer'
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
             <Homepage/>
           </Route>
         </Switch>
+        <Footer />
       </BrowserRouter>
     </ThemeProvider>
   )
