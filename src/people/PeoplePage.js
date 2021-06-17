@@ -5,20 +5,16 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import Typography from '@material-ui/core/Typography';
-import { CardActions } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton'
 
 // Icons
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 // db
 import db from '../db/db'
 
 // dialog
 import PersonDialog from './PersonDialog'
+import PersonCard from './PersonCard';
 
 function formatDate(date) {
     let output = date.toUTCString().split(' ')
@@ -57,59 +53,6 @@ function NewPersonCard(props) {
 
 }
 
-function PersonCard(props) {
-
-    const { person, refresh } = props
-
-    const [deleted, setDeleted] = React.useState(false)
-    async function handleDelete() {
-        await db.PersonTable.delete(person)
-        setDeleted(true)
-        refresh()
-    }
-
-    if (deleted) {
-        return null
-    }
-
-    return (
-        <Grid item xs={12} md={6} lg={4} >
-            <Card>
-                <CardContent align="center">
-                    <AccountCircleIcon
-                        style={{
-                            fontSize: 75
-                        }}
-                    />
-                    <Typography>
-                        {person.firstname} {person.lastname}
-                    </Typography>
-                    <Typography>
-                        Gender: {person.gender.replace(person.gender[0], person.gender[0].toUpperCase())}
-                    </Typography>
-                    <Typography>
-                        Birthdate: {formatDate(person.birthdate)}
-                    </Typography>
-                    <Typography>
-                        Age: {person.getAge()}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <dif style={{flexGrow: 1}} />
-                        <IconButton
-                            onClick={handleDelete}
-                            aria-label={`Delete ${person.firstname} ${person.lastname} `}
-                        >
-                            <DeleteForeverIcon fontSize="large" />
-                        </IconButton>
-                </CardActions>
-            </Card>
-        </Grid>
-
-    )
-
-}
-
 function PeoplePage(props) {
 
     const [peopleCards, setPeopleCards] = React.useState(props.people || [])
@@ -143,7 +86,6 @@ function PeoplePage(props) {
 
 export default PeoplePage
 export {
-    PersonCard,
     NewPersonCard,
     formatDate
 }

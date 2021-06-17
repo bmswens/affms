@@ -26,112 +26,109 @@ const member = {
     gender: "male"
 }
 
-describe('<MandatorySection />', function() {
+describe('<MandatorySection />', function () {
     beforeEach(() => {
         render(<MandatorySection />)
     })
-    it('should contain text fields for first and last name', function() {
+    it('should contain text fields for first and last name', function () {
         let fieldNames = [
             "First Name",
-            "Last Name"
+            "Last Name",
+            "Birthdate"
         ]
         for (let label of fieldNames) {
-            let input = screen.getByRole('textbox', {name: label})
+            let input = screen.getByRole('textbox', { name: label })
             expect(input).not.toBeNull()
         }
     })
-    it('should contain a date selector', function() {
-        let input = screen.getByLabelText('Birthdate')
-        expect(input).not.toBeNull()
-    })
-    it('should contain a select box for gender', function() {
-        let input = screen.getByRole('button', {name: 'Gender ​'})
+    it('should contain a select box for gender', function () {
+        let input = screen.getByRole('button', { name: 'Gender ​' })
         expect(input).not.toBeNull()
     })
 })
 
-describe('<MandatorySection> with pre-filled entry', function() {
+describe('<MandatorySection> with pre-filled entry', function () {
     beforeEach(() => {
         render(
-        <MandatorySection 
-            entry={member}
-        />
+            <MandatorySection
+                entry={member}
+            />
         )
     })
-    it('should contain text fields filled with passed value', function() {
+    it('should contain text fields filled with passed value', function () {
         let fields = [
-            {label: "First Name", value: "John"},
-            {label: "Last Name", value: "Doe"}
+            { label: "First Name", value: "John" },
+            { label: "Last Name", value: "Doe" }
         ]
         for (let field of fields) {
-            let input = screen.getByRole('textbox', {name: field.label})
+            let input = screen.getByRole('textbox', { name: field.label })
             expect(input.value).toEqual(field.value)
         }
     })
-    it('should contain a date selector with pre-filled value', function() {
+    it('should contain a date selector with pre-filled value', function () {
         let input = screen.getByTestId('birthdate-input')
         expect(input.value).toBe('06/01/2021')
     })
-    it('should contain a select box for gender', function() {
-        let label = screen.getByRole('button', {name: 'Gender Male'})
+    it('should contain a select box for gender', function () {
+        let label = screen.getByRole('button', { name: 'Gender Male' })
         expect(label).not.toBeNull()
     })
 })
 
-describe('<OptionalSection>', function() {
+describe('<OptionalSection>', function () {
     beforeEach(() => {
         // Open the accordion to play with it
         render(<OptionalSection />)
         let openButton = screen.getByRole('button')
         fireEvent.click(openButton)
     })
-    it('should let the user know that these are optional', function() {
+    it('should let the user know that these are optional', function () {
         let title = screen.queryByText('Optional Fields')
         expect(title).not.toBeNull()
     })
-    it('should contain text fields for rank and organizaton', function() {
+    it('should contain text fields for rank and organizaton', function () {
         let fields = [
             "Rank",
             "Organization"
         ]
         for (let field of fields) {
-            let input = screen.getByRole('textbox', {name: field})
+            let input = screen.getByRole('textbox', { name: field })
             expect(input).not.toBeNull()
         }
     })
 })
 
-describe('<PersonDialog />', function() {
+describe('<PersonDialog />', function () {
     let open
     beforeEach(() => {
         open = true
         render(<PersonDialog open={open} setOpen={() => open = false} callback={() => jest.fn()} />)
     })
-    it('should have the title "Add a Member"', function() {
+    it('should have the title "Add a Member"', function () {
         let title = screen.queryByText('Add a Member')
         expect(title).not.toBeNull()
     })
-    it('should have a useful close button', function() {
+    it('should have a useful close button', function () {
         let dialog = screen.getByRole('dialog')
         expect(dialog).not.toBeNull()
-        let closeButton = screen.getByRole('button', {name: "Close"})
+        let closeButton = screen.getByRole('button', { name: "Close" })
         fireEvent.click(closeButton)
         waitFor(() => {
             dialog = screen.queryByRole('dialog')
             expect(dialog).toBeNull()
         })
     })
-    it('should have a submit button which is disabled if required fields are blank', function() {
-        let submitButton = screen.queryByRole('button', {name: 'Submit'})
+    it('should have a submit button which is disabled if required fields are blank', function () {
+        let submitButton = screen.queryByRole('button', { name: 'Submit' })
         expect(submitButton).not.toBeNull()
         expect(submitButton.disabled).toBeTruthy()
         // Change first name
-        let firstNameField = screen.getByRole('textbox', {name: 'First Name'})
-        fireEvent.change(firstNameField, {target: {value: "John"}})
+        let firstNameField = screen.getByRole('textbox', { name: 'First Name' })
+        fireEvent.change(firstNameField, { target: { value: "John" } })
         expect(submitButton.disabled).toBeTruthy()
         // Change last name
-        let lastNameField = screen.getByRole('textbox', {name: 'Last Name'})
-        fireEvent.change(lastNameField, {target: {value: "Doe"}})
+        let lastNameField = screen.getByRole('textbox', { name: 'Last Name' })
+        fireEvent.change(lastNameField, { target: { value: "Doe" } })
         expect(submitButton.disabled).toBeTruthy()
         // Change birthdate
         let birthdateField = screen.getByTestId('birthdate-input')
@@ -140,40 +137,40 @@ describe('<PersonDialog />', function() {
         expect(submitButton.disabled).toBeTruthy()
         // Change Gender
         let genderField = screen.getByTestId('gender-input')
-        fireEvent.change(genderField, {target: {value: "male"}})
+        fireEvent.change(genderField, { target: { value: "male" } })
         expect(submitButton.disabled).not.toBeTruthy()
     })
-    it('should be uneffected by filling in optional fields', function() {
-        let submitButton = screen.queryByRole('button', {name: 'Submit'})
+    it('should be uneffected by filling in optional fields', function () {
+        let submitButton = screen.queryByRole('button', { name: 'Submit' })
         expect(submitButton).not.toBeNull()
         expect(submitButton.disabled).toBeTruthy()
         // Open optional portion
-        let openButton = screen.getByRole('button', {name: "Optional Fields"})
+        let openButton = screen.getByRole('button', { name: "Optional Fields" })
         fireEvent.click(openButton)
         // Change rank
-        let rankField = screen.getByRole('textbox', {name: 'Rank'})
-        fireEvent.change(rankField, {target: {value: "TSgt"}})
+        let rankField = screen.getByRole('textbox', { name: 'Rank' })
+        fireEvent.change(rankField, { target: { value: "TSgt" } })
         expect(submitButton.disabled).toBeTruthy()
         // Change org
-        let organizationField = screen.getByRole('textbox', {name: 'Organization'})
-        fireEvent.change(organizationField, {target: {value: "DOB"}})
+        let organizationField = screen.getByRole('textbox', { name: 'Organization' })
+        fireEvent.change(organizationField, { target: { value: "DOB" } })
         expect(submitButton.disabled).toBeTruthy()
     })
-    it('should add a member to the database when submit is enabled and clicked', async function() {
-        let submitButton = screen.getByRole('button', {name: 'Submit'})
+    it('should add a member to the database when submit is enabled and clicked', async function () {
+        let submitButton = screen.getByRole('button', { name: 'Submit' })
         // Change first name
-        let firstNameField = screen.getByRole('textbox', {name: 'First Name'})
-        fireEvent.change(firstNameField, {target: {value: "John"}})
+        let firstNameField = screen.getByRole('textbox', { name: 'First Name' })
+        fireEvent.change(firstNameField, { target: { value: "John" } })
         // Change last name
-        let lastNameField = screen.getByRole('textbox', {name: 'Last Name'})
-        fireEvent.change(lastNameField, {target: {value: "Doe"}})
+        let lastNameField = screen.getByRole('textbox', { name: 'Last Name' })
+        fireEvent.change(lastNameField, { target: { value: "Doe" } })
         // Change birthdate
         let birthdateField = screen.getByTestId('birthdate-input')
         let now = new Date()
         fireEvent.change(birthdateField, now)
         // Change Gender
         let genderField = screen.getByTestId('gender-input')
-        fireEvent.change(genderField, {target: {value: "male"}})
+        fireEvent.change(genderField, { target: { value: "male" } })
         expect(submitButton.disabled).not.toBeTruthy()
         fireEvent.click(submitButton)
         await waitFor(async () => {
@@ -183,12 +180,64 @@ describe('<PersonDialog />', function() {
     })
 })
 
-describe('<PersonDialog /> with a pre-filled minimal entry', function() {
-    beforeEach(() => {
-        render(<PersonDialog open={true} entry={member} editMode/>)
+describe('<PersonDialog /> with a pre-filled minimal entry', function () {
+    beforeAll(async () => {
+        await db.PersonTable.clear()
+        await db.PersonTable.add(member)
     })
-    it('should have the title "Edit a Member"', function() {
+    beforeEach(async () => {
+        let people = await db.PersonTable.query({ firstname: 'John', lastname: "Doe" })
+        let person = people[0]
+        render(<PersonDialog
+            open={true}
+            entry={person}
+            editMode
+            setOpen={() => jest.fn()}
+            callback={() => jest.fn()}
+        />)
+    })
+    it('should have the title "Edit a Member"', function () {
         let title = screen.queryByText('Edit a Member')
         expect(title).not.toBeNull()
+    })
+    it('should have fields that already contain their values', function () {
+        let expected = [
+            { field: "First Name", value: member.firstname, role: 'textbox' },
+            { field: "Last Name", value: member.lastname, role: 'textbox' },
+            { field: "Birthdate", value: member.birthdate, role: 'textbox' }
+        ]
+        for (let each of expected) {
+            let input = screen.queryByRole(each.role, { name: each.field })
+            expect(input).not.toBeNull()
+            let value = input.value
+            if (each.field === "Birthdate") {
+                value = Date.parse(value)
+            }
+            expect(value).toEqual(each.value)
+        }
+        expect(screen.queryByRole('button', { name: 'Gender Male' })).not.toBeNull()
+    })
+    it('should be unable to edit "First Name" and "Last Name" fields', function () {
+        let fieldNames = [
+            { field: "First Name", value: member.firstname },
+            { field: "Last Name", value: member.lastname }
+        ]
+        for (let row of fieldNames) {
+            let input = screen.getByRole('textbox', { name: row.field })
+            expect(input.disabled).toBeTruthy()
+            fireEvent.change(input, { target: { value: 'Test' } })
+            expect(input.value).toEqual(row.value)
+        }
+    })
+    it('should save any updates', async function () {
+        let genderField = screen.getByTestId('gender-input')
+        fireEvent.change(genderField, { target: { value: "female" } })
+        let submitButton = screen.getByRole('button', { name: 'Submit' })
+        fireEvent.click(submitButton)
+        await waitFor(async () => {
+            let allPeople = await db.PersonTable.all()
+            expect(allPeople).toHaveLength(1)
+            expect(allPeople[0].gender).toEqual('female')
+        })
     })
 })

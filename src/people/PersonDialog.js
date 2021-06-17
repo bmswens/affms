@@ -30,6 +30,7 @@ import { Typography } from '@material-ui/core'
 
 // db
 import db from '../db/db'
+import Person from '../db/Person'
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -53,14 +54,18 @@ function MandatorySection(props) {
                 id="firstname-textbox"
                 variant="outlined"
                 label="First Name"
+                aria-label="First Name"
                 fullWidth
                 required
+                disabled={editMode}
                 value={entry?.firstname || ''}
                 onChange={event => {
-                    setEntry({
-                        ...entry,
-                        firstname: event.target.value
-                    })
+                    if (!editMode) {
+                        setEntry({
+                            ...entry,
+                            firstname: event.target.value
+                        })
+                    } 
                 }}
             />
             <TextField
@@ -70,12 +75,15 @@ function MandatorySection(props) {
                 label="Last Name"
                 fullWidth
                 required
+                disabled={editMode}
                 value={entry?.lastname || ''}
                 onChange={event => {
-                    setEntry({
-                        ...entry,
-                        lastname: event.target.value
-                    })
+                    if (!editMode) {
+                        setEntry({
+                            ...entry,
+                            lastname: event.target.value
+                        })
+                    }
                 }}
             />
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -83,7 +91,7 @@ function MandatorySection(props) {
                     margin="normal"
                     fullWidth
                     required
-                    inputProps={{ "data-testid": "birthdate-input" }}
+                    inputProps={{ "data-testid": "birthdate-input", "aria-label": "Birthdate" }}
                     inputVariant="outlined"
                     label="Birthdate"
                     aria-label="Birthdate"
@@ -187,7 +195,13 @@ function PersonDialog(props) {
     let title = editMode ? "Edit a Member" : "Add a Member"
 
     async function handleSubmit() {
-        await db.PersonTable.add(entry)
+        if (editMode) {
+            let person = new Person(entry)
+            await person.save()
+        }
+        else {
+            await db.PersonTable.add(entry)
+        }
         setOpen(false)
         props.callback()
     }
