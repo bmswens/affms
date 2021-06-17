@@ -14,8 +14,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 // Material UI Icons
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import MenuIcon from '@material-ui/icons/Menu';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 // Custom
 import TestEntryDialog from './tests/TestEntryDialog'
@@ -99,7 +99,7 @@ function TopNav() {
                     </Link>
                     <div style={{ flexGrow: 1 }} />
                     <IconButton color="inherit" aria-label="Add New Test Entry" onClick={() => { setOpen(true) }}>
-                        <AddCircleOutlineIcon />
+                        <PostAddIcon fontSize="large" />
                     </IconButton>
                 </Toolbar>
             </AppBar>

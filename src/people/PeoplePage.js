@@ -27,7 +27,7 @@ function NewPersonCard(props) {
 
     return (
         <React.Fragment>
-            <Grid item xs={12} md={6} lg={4} >
+            <Grid item xs={12} md={6} lg={3} >
                 <Card 
                     style={{
                         height: "100%",

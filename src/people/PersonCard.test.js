@@ -33,4 +33,12 @@ describe('<PersonCard > with person', function () {
             expect(body.children.length).toEqual(0);
         });
     });
+    it('should have a functional edit button', async function() {
+        let editButton = screen.getByRole('button', {name: `Edit ${member.firstname} ${member.lastname}`})
+        fireEvent.click(editButton)
+        await waitFor(() => {
+            expect(screen.queryByRole('dialog')).not.toBeNull()
+            expect(screen.queryByRole('heading', {name: 'Edit a Member'})).not.toBeNull()
+        })
+    })
 });
