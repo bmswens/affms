@@ -189,5 +189,37 @@ describe('<TestEntryDialog /> Ad Hoc', function() {
     })
 })
 
+describe('<TestEntryDialog> with person', function() {
+    beforeAll(async () => {
+        await db.PersonTable.add(person)
+        await waitFor(async () => {
+            let list = await db.PersonTable.all()
+            expect(list.length).toEqual(1)
+        })
+    })
+    afterAll(async () => {
+        await db.PersonTable.clear()
+    })
+    beforeEach(async () => {
+        render(<TestEntryDialog 
+            open={true} 
+            setOpen={() => jest.fn()}
+            person={{
+                ...person,
+                getAge: () => 18
+            }}
+            />)
+        await waitFor(async () => {
+            let statusContainer = screen.getByTestId('test-entry-status')
+            let status = within(statusContainer).queryByText('loaded')
+            expect(status).not.toBeNull()
+        })
+    })
+    it('should show the member as already selected', function() {
+        let input = screen.getByLabelText('Test Taker')
+        expect(input.value).toEqual('John Doe')
+    })
+})
+
 // TODO: Test the <FeedbackDialog />
 // it's mostly just display, so simply rendering as part of <TestEntryDialog /> covered most

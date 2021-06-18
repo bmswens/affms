@@ -55,10 +55,16 @@ function cleanTime(time) {
 
 function TestEntryDialog(props) {
 
-    const [entry, setEntry] = React.useState({
+    let defaultEntry = {
         date: new Date(),
         official: false
-    })
+    }
+
+    if (props.person) {
+        defaultEntry.testee = props.person
+    }
+
+    const [entry, setEntry] = React.useState(defaultEntry)
 
     const [people, setPeople] = React.useState([])
     const [status, setStatus] = React.useState('loading')
@@ -129,9 +135,7 @@ function TestEntryDialog(props) {
             thisTest = new Test(data)
             await thisTest.calculateScore()
         }
-        setEntry({
-            date: new Date()
-        })
+        setEntry(defaultEntry)
         setOldTest(lastTest)
         setNewTest(thisTest)
         handleClose()
@@ -227,6 +231,7 @@ function TestEntryDialog(props) {
                                 testee: newInputValue
                             })
                         }}
+                        value={entry.testee || null}
                     />
                     {genderField}
                     {ageField}

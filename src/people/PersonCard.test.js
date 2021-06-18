@@ -3,10 +3,13 @@ import {
     screen,
     render,
     fireEvent,
-    waitFor
+    waitFor,
+    within
 } from '@testing-library/react';
 import PersonCard from './PersonCard';
 import { member } from './PeoplePage.test';
+
+member.getAge = () => 18
 
 describe('<PersonCard > with person', function () {
     let body;
@@ -47,6 +50,16 @@ describe('<PersonCard > with person', function () {
         fireEvent.click(downloadButton)
         await waitFor(() => {
             expect(spy).toHaveBeenCalled()
+        })
+    })
+    it('should have a functional "Add Test" button', async function() {
+        let newTestButton = screen.getByRole('button', {name: `Add New Test For ${member.firstname} ${member.lastname}`})
+        fireEvent.click(newTestButton)
+        await waitFor(() => {
+            let dialog = screen.queryByRole('dialog')
+            expect(dialog).not.toBeNull()
+            let input = screen.getByLabelText('Test Taker')
+            expect(input.value).toEqual('John Doe')
         })
     })
 });

@@ -14,11 +14,13 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 // Custom
 import db from '../db/db';
 import { formatDate } from './PeoplePage';
 import PersonDialog from './PersonDialog'
+import TestEntryDialog from '../tests/TestEntryDialog'
 
 function PersonCard(props) {
 
@@ -33,6 +35,7 @@ function PersonCard(props) {
     }
 
     const [openEdit, setOpenEdit] = React.useState(false)
+    const [openTest, setOpenTest] = React.useState(false)
 
     // download
     const [downloadURL, setDownloadURL] = React.useState(null)
@@ -112,6 +115,12 @@ function PersonCard(props) {
                         >
                             <EditIcon fontSize="large" />
                         </IconButton>
+                        <IconButton
+                            onClick={() => setOpenTest(true)}
+                            aria-label={`Add New Test For ${person.firstname} ${person.lastname} `}
+                        >
+                            <PostAddIcon fontSize="large" />
+                        </IconButton>
                     </CardActions>
                 </Card>
             </Grid>
@@ -121,6 +130,11 @@ function PersonCard(props) {
                 editMode
                 setOpen={setOpenEdit}
                 callback={refresh}
+            />
+            <TestEntryDialog
+                open={openTest}
+                setOpen={setOpenTest}
+                person={person}
             />
         </React.Fragment>
 
