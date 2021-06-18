@@ -12,10 +12,17 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 // Material UI Icons
 import MenuIcon from '@material-ui/icons/Menu';
 import PostAddIcon from '@material-ui/icons/PostAdd';
+import AssessmentIcon from '@material-ui/icons/Assessment'
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import LinkIcon from '@material-ui/icons/Link';
+import PieChartIcon from '@material-ui/icons/PieChart';
+
 
 // Custom
 import TestEntryDialog from './tests/TestEntryDialog'
@@ -62,20 +69,57 @@ function MenuButton(props) {
                 open={open}
                 onClose={close}
             >
-                <Link to="/reports" className={classes.title}>
-                    <MenuItem
-                        onClick={close}
-                    >
-                        Reports
-                    </MenuItem>
-                </Link>
                 <Link to="/people" className={classes.title}>
                     <MenuItem
                         onClick={close}
                     >
-                        People
+                        <ListItemIcon>
+                            <PeopleAltIcon fontSize="large" />
+                        </ListItemIcon>
+                        <ListItemText>
+                            Manage People
+                        </ListItemText>
                     </MenuItem>
                 </Link>
+                <Link to="/reports" className={classes.title}>
+                    <MenuItem
+                        onClick={close}
+                    >
+                        <ListItemIcon>
+                            <AssessmentIcon fontSize="large" />
+                        </ListItemIcon>
+                        <ListItemText>
+                            Individual Reports
+                        </ListItemText>
+                    </MenuItem>
+                </Link>
+                    <MenuItem
+                        onClick={close}
+                        disabled
+                    >
+                        <ListItemIcon>
+                            <PieChartIcon fontSize="large" />
+                        </ListItemIcon>
+                        <ListItemText>
+                            Group Reports
+                        </ListItemText>
+                    </MenuItem>
+                <a 
+                    href="https://affms.us.af.mil/" 
+                    className={classes.title}
+                    target="_blank"
+                >
+                    <MenuItem
+                        onClick={close}
+                    >
+                        <ListItemIcon>
+                            <LinkIcon fontSize="large" />
+                        </ListItemIcon>
+                        <ListItemText>
+                            Official AFFMS II
+                        </ListItemText>
+                    </MenuItem>
+                </a>
             </Menu>
         </React.Fragment>
     )

@@ -35,8 +35,10 @@ describe('<MenuButton>', function() {
         expect(button).not.toBeNull()
         fireEvent.click(button)
         let pages = [
-            'People',
-            'Reports'
+            'Manage People',
+            'Individual Reports',
+            'Group Reports',
+            'Official AFFMS II'
         ]
         for (let page of pages) {
             let text = screen.queryByText(page)
