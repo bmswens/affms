@@ -201,6 +201,7 @@ function PersonDialog(props) {
         }
         else {
             await db.PersonTable.add(entry)
+            setEntry({birthdate: new Date()})
         }
         setOpen(false)
         props.callback()

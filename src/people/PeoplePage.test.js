@@ -50,22 +50,6 @@ describe('<PeoplePage>', function () {
     })
 })
 
-describe('<NewPersonCard />', function () {
-    beforeEach(() => {
-        render(<NewPersonCard />)
-    })
-    it('should open the <PersonDialog> when clicked', async function () {
-        let dialog = screen.queryByRole('dialog')
-        expect(dialog).toBeNull()
-        let card = screen.getByRole('button', {name: 'Add New Person'})
-        fireEvent.click(card)
-        await waitFor(() => {
-            dialog = screen.queryByRole('dialog')
-            expect(dialog).not.toBeNull()
-        })
-    })
-})
-
 export {
     member
 }

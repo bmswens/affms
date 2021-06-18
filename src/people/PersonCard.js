@@ -97,7 +97,9 @@ function PersonCard(props) {
                             style={{
                                 display: 'none'
                             }}
-                        />
+                        >
+                            Hidden Download Anchor
+                        </a>
                         <IconButton
                             onClick={handleDownload}
                             aria-label={`Download ${person.firstname} ${person.lastname} `}

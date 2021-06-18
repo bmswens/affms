@@ -3,55 +3,19 @@ import React from 'react'
 
 // Material UI
 import Grid from '@material-ui/core/Grid'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-
-// Icons
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 // db
 import db from '../db/db'
 
 // dialog
-import PersonDialog from './PersonDialog'
 import PersonCard from './PersonCard';
+import ActionBar from './ActionBar'
 
 function formatDate(date) {
     let output = date.toUTCString().split(' ')
     return `${output[1]} ${output[2]} ${output[3]}`
 }
 
-function NewPersonCard(props) {
-
-    const [open, setOpen] = React.useState(false)
-
-    return (
-        <React.Fragment>
-            <Grid item xs={12} md={6} lg={3} >
-                <Card 
-                    style={{
-                        height: "100%",
-                        cursor: "pointer"
-                    }} 
-                    align="center" 
-                    justifyitems="center"
-                >
-                    <CardContent role="button" onClick={() => setOpen(true)} aria-label="Add New Person" >
-                        <AddCircleOutlineIcon
-                            style={{fontSize: 125}}
-                        />
-                    </CardContent>
-                </Card>
-            </Grid>
-            <PersonDialog
-                open={open}
-                setOpen={setOpen}
-                callback={props.callback}
-            />
-        </React.Fragment>
-    )
-
-}
 
 function PeoplePage(props) {
 
@@ -73,11 +37,15 @@ function PeoplePage(props) {
     }, [reload])
 
     return (
-        <Grid container spacing={1} justify="center" alignItems="stretch" style={{ marginTop: 5, paddingLeft: 7, paddingRight: 7 }}>
+        <Grid 
+            container 
+            spacing={1} 
+            justify="center" 
+            alignItems="stretch" 
+            style={{ marginTop: 5, paddingLeft: 7, paddingRight: 7 }}
+        >
+            <ActionBar callback={refresh}/>
             {peopleCards}
-            <NewPersonCard
-                callback={refresh}
-            />
         </Grid>
     )
 
@@ -86,6 +54,5 @@ function PeoplePage(props) {
 
 export default PeoplePage
 export {
-    NewPersonCard,
     formatDate
 }
