@@ -41,4 +41,12 @@ describe('<PersonCard > with person', function () {
             expect(screen.queryByRole('heading', {name: 'Edit a Member'})).not.toBeNull()
         })
     })
+    it('should have a functional download button', async function() {
+        const spy = jest.spyOn(URL, "revokeObjectURL")
+        let downloadButton = screen.getByRole('button', {name: `Download ${member.firstname} ${member.lastname}`})
+        fireEvent.click(downloadButton)
+        await waitFor(() => {
+            expect(spy).toHaveBeenCalled()
+        })
+    })
 });

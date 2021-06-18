@@ -26,3 +26,7 @@ jest.mock('react-chartjs-2', () => ({
     Pie: () => null,
     Line: () => null
 }))
+
+// for download testing
+global.URL.createObjectURL = jest.fn(() => 'fakeURL')
+global.URL.revokeObjectURL = jest.fn(() => 'fakeURL')

@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 
 // Custom
 import db from '../db/db';
@@ -23,6 +24,7 @@ function PersonCard(props) {
 
     const { person, refresh } = props;
 
+    // delete 
     const [deleted, setDeleted] = React.useState(false);
     async function handleDelete() {
         await db.PersonTable.delete(person);
@@ -31,6 +33,28 @@ function PersonCard(props) {
     }
 
     const [openEdit, setOpenEdit] = React.useState(false)
+
+    // download
+    const [downloadURL, setDownloadURL] = React.useState(null)
+    async function handleDownload() {
+        let tests = await db.TestTable.getByPerson(person)
+        let outputData = {
+            ...person,
+            tests: tests
+        }
+        let output = new Blob([JSON.stringify(outputData, null, 2)], {type : 'application/json'})
+        let outputURL = URL.createObjectURL(output)
+        setDownloadURL(outputURL)
+    }
+
+    React.useEffect(() => {
+        if (downloadURL !== null) {
+            let hiddenDownload = document.getElementById(`download-${person.firstname}-${person.lastname}-hidden-button`)
+            hiddenDownload.click()
+            URL.revokeObjectURL(downloadURL)
+            setDownloadURL(null)
+        }
+    }, [downloadURL])
 
     if (deleted) {
         return null;
@@ -66,6 +90,20 @@ function PersonCard(props) {
                             <DeleteForeverIcon fontSize="large" />
                         </IconButton>
                         <div style={{ flexGrow: 1 }} />
+                        <a 
+                            id={`download-${person.firstname}-${person.lastname}-hidden-button`}
+                            href={downloadURL}
+                            download={`${person.firstname}-${person.lastname}.affms.json`}
+                            style={{
+                                display: 'none'
+                            }}
+                        />
+                        <IconButton
+                            onClick={handleDownload}
+                            aria-label={`Download ${person.firstname} ${person.lastname} `}
+                        >
+                            <CloudDownloadIcon fontSize="large" />
+                        </IconButton>
                         <IconButton
                             onClick={() => setOpenEdit(true)}
                             aria-label={`Edit ${person.firstname} ${person.lastname} `}
