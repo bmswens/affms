@@ -21,6 +21,7 @@ import db from '../db/db';
 import { formatDate } from './PeoplePage';
 import PersonDialog from './PersonDialog'
 import TestEntryDialog from '../tests/TestEntryDialog'
+import ConfirmationDialog from '../dialogs/ConfirmationDialog'
 
 function PersonCard(props) {
 
@@ -36,6 +37,7 @@ function PersonCard(props) {
 
     const [openEdit, setOpenEdit] = React.useState(false)
     const [openTest, setOpenTest] = React.useState(false)
+    const [openDelete, setOpenDelete] = React.useState(false)
 
     // download
     const [downloadURL, setDownloadURL] = React.useState(null)
@@ -87,7 +89,7 @@ function PersonCard(props) {
                     </CardContent>
                     <CardActions>
                         <IconButton
-                            onClick={handleDelete}
+                            onClick={() => setOpenDelete(true)}
                             aria-label={`Delete ${person.firstname} ${person.lastname} `}
                         >
                             <DeleteForeverIcon fontSize="large" />
@@ -135,6 +137,12 @@ function PersonCard(props) {
                 open={openTest}
                 setOpen={setOpenTest}
                 person={person}
+            />
+            <ConfirmationDialog
+                open={openDelete}
+                setOpen={setOpenDelete}
+                callback={handleDelete}
+                text={"This action will permanently delete this member and all tests associated with them."}
             />
         </React.Fragment>
 

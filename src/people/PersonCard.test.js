@@ -32,6 +32,8 @@ describe('<PersonCard > with person', function () {
     it('should have a functional delete button', async function () {
         let deleteButton = screen.getByRole('button', { name: `Delete ${member.firstname} ${member.lastname}` });
         fireEvent.click(deleteButton);
+        let confirmButton = screen.getByRole('button', {name: 'Confirm'})
+        fireEvent.click(confirmButton)
         await waitFor(() => {
             expect(body.children.length).toEqual(0);
         });
