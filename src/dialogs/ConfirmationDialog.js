@@ -25,7 +25,7 @@ function ConfirmationDialog(props) {
             open={open}
             onClose={close}
         >
-            <DialogTitle>
+            <DialogTitle align="center">
                 Confirmation Required
             </DialogTitle>
             <DialogContent>
