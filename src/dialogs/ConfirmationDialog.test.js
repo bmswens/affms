@@ -4,7 +4,8 @@ import React from 'react'
 // testing lib
 import {  
     render,
-    screen
+    screen,
+    fireEvent
 } from '@testing-library/react'
 
 // to test
