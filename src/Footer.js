@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton'
 // Icons
 import EmailIcon from '@material-ui/icons/Email'
 import GitHubIcon from '@material-ui/icons/GitHub'
+import BugReportIcon from '@material-ui/icons/BugReport'
 
 function Footer(props) {
 
@@ -36,13 +37,27 @@ function Footer(props) {
                         >
                             <EmailIcon />
                         </IconButton>
-                        <IconButton
-                            aria-label="Find Us On Github"
+                        <a
+                            href="https://github.com/bmswens/affms"
+                            target="_blank"
                         >
-                            <GitHubIcon />
-                        </IconButton>
+                            <IconButton
+                                aria-label="Find Us On Github"
+                            >
+                                <GitHubIcon />
+                            </IconButton>
+                        </a>
+                        <a
+                            href="https://github.com/bmswens/affms/issues/new"
+                            target="_blank"
+                        >
+                            <IconButton
+                                aria-label="Report A Bug"
+                            >
+                                <BugReportIcon />
+                            </IconButton>
+                        </a>
                     </CardContent>
-
                 </Card>
             </Grid>
         </Grid>

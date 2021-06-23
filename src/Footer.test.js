@@ -16,10 +16,15 @@ describe('<Footer />', function() {
         expect(screen.queryByText(notAffiliatedText)).not.toBeNull()
     })
     it('should have buttons for contact and github', function() {
-        let contactButton = screen.queryByRole('button', {name: 'Contact Us'})
-        let githubButton = screen.queryByRole('button', {name: 'Find Us On Github'})
-        expect(contactButton).not.toBeNull()
-        expect(githubButton).not.toBeNull()
+        let buttons = [
+            'Contact Us',
+            'Find Us On Github',
+            'Report A Bug'
+        ]
+        for (let buttonName of buttons) {
+            let button = screen.queryByRole('button', {name: buttonName})
+            expect(button).not.toBeNull()
+        }
     })
     it('should have a copyright', function() {
         let currentYear = (new Date()).getFullYear()

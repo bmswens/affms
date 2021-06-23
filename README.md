@@ -1,6 +1,6 @@
 # AFFMS (Air Force Fitness Mock System)
 
-A webapp for managing PT tests for individuals and groups of people.
+A webapp for managing USAF PT tests for individuals and groups of people.
 
 Currently hosted at [AFFMS.app](https://affms.app/)
 
