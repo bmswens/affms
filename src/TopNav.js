@@ -14,6 +14,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider'
 
 // Material UI Icons
 import MenuIcon from '@material-ui/icons/Menu';
@@ -38,9 +39,56 @@ const useStyles = makeStyles((theme) => ({
     appBar: {
         backgroundColor: theme.palette.background.paper,
         flexGrow: 1,
-
-    }
+    },
+    dividerFullWidth: {
+        margin: `5px 0 0 ${theme.spacing(2)}px`,
+    },
 }));
+
+function NiceDivider(props) {
+    const classes = useStyles();
+    return (
+        <React.Fragment>
+            <Divider component="li" />
+            <li>
+                <Typography
+                    className={classes.dividerFullWidth}
+                    color="textSecondary"
+                    display="block"
+                    variant="caption"
+                >
+                    {props.text}
+                </Typography>
+            </li>
+        </React.Fragment>
+    )
+}
+
+function ExternalLink(props) {
+
+    const classes = useStyles();
+    const { link, text, close } = props
+
+    return (
+        <a
+            href={link}
+            className={classes.title}
+            target="_blank"
+        >
+            <MenuItem
+                onClick={close}
+            >
+                <ListItemIcon>
+                    <LinkIcon fontSize="large" />
+                </ListItemIcon>
+                <ListItemText>
+                    {text}
+                </ListItemText>
+            </MenuItem>
+        </a>
+    )
+
+}
 
 function MenuButton(props) {
 
@@ -93,33 +141,33 @@ function MenuButton(props) {
                         </ListItemText>
                     </MenuItem>
                 </Link>
-                    <MenuItem
-                        onClick={close}
-                        disabled
-                    >
-                        <ListItemIcon>
-                            <PieChartIcon fontSize="large" />
-                        </ListItemIcon>
-                        <ListItemText>
-                            Group Reports
-                        </ListItemText>
-                    </MenuItem>
-                <a 
-                    href="https://affms.us.af.mil/" 
-                    className={classes.title}
-                    target="_blank"
+                <MenuItem
+                    onClick={close}
+                    disabled
                 >
-                    <MenuItem
-                        onClick={close}
-                    >
-                        <ListItemIcon>
-                            <LinkIcon fontSize="large" />
-                        </ListItemIcon>
-                        <ListItemText>
-                            Official AFFMS II
-                        </ListItemText>
-                    </MenuItem>
-                </a>
+                    <ListItemIcon>
+                        <PieChartIcon fontSize="large" />
+                    </ListItemIcon>
+                    <ListItemText>
+                        Group Reports
+                    </ListItemText>
+                </MenuItem>
+                <NiceDivider text="USAF Links" />
+                <ExternalLink
+                    link="https://affms.us.af.mil/"
+                    text="Official AFFMS II"
+                    close={close}
+                />
+                <ExternalLink
+                    link="https://www.afpc.af.mil/Portals/70/documents/07_FITNESS/5%20Year%20Score%20Chart%20updated%201.5%20mile%20pushups%20and%20situps%2020210602_0935.pdf?ver=_cagn5TJARTu2cXf5spDGA%3d%3d"
+                    text="PT Standards"
+                    close={close}
+                />
+                <ExternalLink
+                    link="https://static.e-publishing.af.mil/production/1/af_a1/publication/afman36-2905/afman36-2905.pdf"
+                    text="AFI 36-2905"
+                    close={close}
+                />
             </Menu>
         </React.Fragment>
     )

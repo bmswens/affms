@@ -38,7 +38,9 @@ describe('<MenuButton>', function() {
             'Manage People',
             'Individual Reports',
             'Group Reports',
-            'Official AFFMS II'
+            'Official AFFMS II',
+            'PT Standards',
+            'AFI 36-2905'
         ]
         for (let page of pages) {
             let text = screen.queryByText(page)
