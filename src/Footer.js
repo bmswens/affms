@@ -40,6 +40,7 @@ function Footer(props) {
                         <a
                             href="https://github.com/bmswens/affms"
                             target="_blank"
+                            rel="noreferrer"
                         >
                             <IconButton
                                 aria-label="Find Us On Github"
@@ -50,6 +51,7 @@ function Footer(props) {
                         <a
                             href="https://github.com/bmswens/affms/issues/new"
                             target="_blank"
+                            rel="noreferrer"
                         >
                             <IconButton
                                 aria-label="Report A Bug"

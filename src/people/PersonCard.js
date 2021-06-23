@@ -59,7 +59,7 @@ function PersonCard(props) {
             URL.revokeObjectURL(downloadURL)
             setDownloadURL(null)
         }
-    }, [downloadURL])
+    }, [downloadURL, person])
 
     if (deleted) {
         return null;

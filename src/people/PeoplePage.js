@@ -21,20 +21,21 @@ function PeoplePage(props) {
 
     const [peopleCards, setPeopleCards] = React.useState(props.people || [])
     const [reload, setReload] = React.useState(0)
-
-    async function load() {
-        let people = await db.PersonTable.all()
-        let cards = people.map(person =>  <PersonCard person={person} key={`${person.firstname}-${person.lastname}`} refresh={refresh} />)
-        setPeopleCards(cards)
-    }
-
-    function refresh() {
+    
+    const refresh = React.useCallback(() => {
         setReload(reload + 1)
-    }
+    }, [reload])
+
+    const load = React.useCallback(async () => {
+        let people = await db.PersonTable.all()
+        let cards = people.map(person =>  <PersonCard person={person} key={`${person.firstname}-${person.lastname}`} refresh={(refresh)} />)
+        setPeopleCards(cards)
+    }, [refresh])
+
 
     React.useEffect(() => {
         load()
-    }, [reload])
+    }, [load])
 
     return (
         <Grid 

@@ -116,11 +116,7 @@ const TestTable = {
     getByPerson: async function(person, officialOnly=false) {
         let tests = await db.tests.where({firstname: person.firstname, lastname: person.lastname}).toArray()
         if (officialOnly) {
-            tests = tests.filter(test => {
-                if (test.official) {
-                    return test
-                }
-            })
+            tests = tests.filter(test => test.official)
         }
         else {
         }

@@ -74,6 +74,7 @@ function ExternalLink(props) {
             href={link}
             className={classes.title}
             target="_blank"
+            rel="noreferrer"
         >
             <MenuItem
                 onClick={close}

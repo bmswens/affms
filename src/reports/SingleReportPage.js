@@ -28,7 +28,7 @@ function SingleReport(props) {
     const [penultimate, setPenultimate] = React.useState({})
     const [status, setStatus] = React.useState('loading')
 
-    async function load() {
+    const load = React.useCallback(async () => {
         let allTests = await db.TestTable.getByPerson(target, officialOnly)
         let testCount = allTests.length
         if (testCount >= 1) {
@@ -50,13 +50,13 @@ function SingleReport(props) {
             setTests([])
         }
         setStatus('loaded')
-    }
+    }, [target, officialOnly])
 
     React.useEffect(() => {
         if (target !== null) {
             load()
         }
-    }, [target, officialOnly])
+    }, [load, target])
 
     if (target === null) {
         return null
