@@ -187,6 +187,10 @@ describe('<TestEntryDialog /> Ad Hoc', function() {
             expect(screen.queryByText(/Results/)).not.toBeNull()
         })
     })
+    it('should remove the "official" field', function() {
+        let officialSection = screen.queryByLabelText('Official Test')
+        expect(officialSection).toBeNull()
+    })
 })
 
 describe('<TestEntryDialog> with person', function() {

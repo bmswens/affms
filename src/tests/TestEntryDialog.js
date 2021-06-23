@@ -52,6 +52,39 @@ function cleanTime(time) {
     return time
 }
 
+function OfficialSection(props) {
+
+    const {entry, setEntry } = props
+
+    if (entry.testee?.firstname === "Ad" && entry.testee?.lastname === "Hoc") {
+        return null
+    }
+    else {
+        return (
+            <FormControl variant="outlined" fullWidth>
+                <InputLabel id="official-label">Official Test</InputLabel>
+                <Select
+                    labelId="official-label"
+                    id="offial-select"
+                    value={entry.official || false}
+                    onChange={(event) => {
+                        setEntry({
+                            ...entry,
+                            official: event.target.value
+                        })
+                    }}
+                    label="Official Test"
+                >
+                    <MenuItem value={true}>True</MenuItem>
+                    <MenuItem value={false}>False</MenuItem>
+                </Select>
+            </FormControl>
+        )
+    }
+
+
+}
+
 
 function TestEntryDialog(props) {
 
@@ -74,7 +107,7 @@ function TestEntryDialog(props) {
         tempPeople.unshift({
             firstname: 'Ad',
             lastname: 'Hoc',
-            getAge: function() {
+            getAge: function () {
                 return this.age
             }
         })
@@ -255,24 +288,10 @@ function TestEntryDialog(props) {
                             }}
                         />
                     </MuiPickersUtilsProvider>
-                    <FormControl variant="outlined" fullWidth>
-                        <InputLabel id="official-label">Official Test</InputLabel>
-                        <Select
-                            labelId="official-label"
-                            id="offial-select"
-                            value={entry.official || false}
-                            onChange={(event) => {
-                                setEntry({
-                                    ...entry,
-                                    official: event.target.value
-                                })
-                            }}
-                            label="Official Test"
-                        >
-                            <MenuItem value={true}>True</MenuItem>
-                            <MenuItem value={false}>False</MenuItem>
-                        </Select>
-                    </FormControl>
+                    <OfficialSection
+                        setEntry={setEntry}
+                        entry={entry}
+                    />
                     <TextField
                         style={{ marginTop: 7 }}
                         variant="outlined"
@@ -328,7 +347,7 @@ function TestEntryDialog(props) {
                         onClick={handleClose}
                     >
                         Close
-                </Button>
+                    </Button>
                     <Button
                         variant="contained"
                         color="primary"
