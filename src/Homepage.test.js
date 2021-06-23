@@ -19,14 +19,14 @@ describe('<Homepage>', function() {
     })
     it('should have sections with arbitrary text', function() {
         let sections = [
+            /AFFMS/,
             /About/,
             /The Technology/,
-            /Useful Links/,
-            /Contact Us/
         ]
         for (let title of sections) {
-            let text = screen.queryByText(title)
-            expect(text).not.toBeNull()
+            console.log(title)
+            let text = screen.queryAllByText(title)
+            expect(text.length).not.toEqual(0)
         }
     })
 })
