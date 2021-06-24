@@ -19,7 +19,7 @@ function Footer(props) {
 
     return (
         <Grid container spacing={1} style={{ marginTop: 5, paddingLeft: 7, paddingRight: 7 }} justify="center">
-            <Grid item xs={12} lg={6} >
+            <Grid item xs={12} md={8} >
                 <Card>
                     <CardContent align="center">
                         <Typography>
