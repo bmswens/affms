@@ -24,7 +24,6 @@ describe('<Homepage>', function() {
             /The Technology/,
         ]
         for (let title of sections) {
-            console.log(title)
             let text = screen.queryAllByText(title)
             expect(text.length).not.toEqual(0)
         }

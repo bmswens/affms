@@ -6,7 +6,7 @@ let genders = [
     'female'
 ]
 // Checking all valid values takes a hot minute
-jest.setTimeout(180000)
+jest.setTimeout(300000)
 
 describe('The RunScoresheet', function() {
     it('should return false if something is wrong score', async function() {
