@@ -1,20 +1,8 @@
-<p align="center">
-    <img align="center" src="public/logo192.png" >
-</p>
-<h1 align="center">
-AFFMS<br>
-Air Force Fitness Mock System
-</h1>
+# AFFMS (Air Force Fitness Mock System)
 
-[![Tests](https://github.com/bmswens/affms/actions/workflows/tests.yml/badge.svg)](https://github.com/bmswens/affms/actions/workflows/tests.yml)
+A webapp for managing USAF PT tests for individuals and groups of people.
 
----
-
-## About
-
-A webapp for managing PT tests for individuals and groups of people.
-
-Hosted at [AFFMS.app](https://affms.app/)
+Currently hosted at [AFFMS.app](https://affms.app/)
 
 ## Built with
 
