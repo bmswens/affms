@@ -7,9 +7,9 @@ on: [push, pull_request]
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
-
+    env:
+      CI: "true"
     strategy:
       matrix:
         node-version: [12.x, 14.x, 16.x]
@@ -22,4 +22,4 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: yarn install
-    - run: yarn test --watchAll
+    - run: yarn test 
