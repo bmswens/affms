@@ -25,6 +25,12 @@ export const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('md')]: {
             fontSize: 64
         }
+    },
+    clickableCard: {
+        height: "100%",
+        '&:hover': {
+            cursor: "pointer"
+        }
     }
 }))
 

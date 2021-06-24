@@ -74,18 +74,21 @@ function PointDisplay(props) {
         trendDisplay = <TrendingIcon newValue={points} oldValue={oldPoints} />;
     }
     let cardProps
+    let className = 'card'
     if (points !== undefined) {
         cardProps = {
             role: 'button',
             onClick: () => setShowFront(!showFront)
         }
+        className = 'clickableCard'
     }
+    
 
     return (
         <Grid item xs={12} lg={3}>
             <Card
                 aria-label={`${component} Card`}
-                className={classes.card}
+                className={classes[className]}
                 {...cardProps}
             >
                 <CardHeader
