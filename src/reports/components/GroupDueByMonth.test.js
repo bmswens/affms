@@ -38,7 +38,4 @@ describe('<GroupDueByMonth>', function() {
         let title = screen.getByText('Due Dates By Month')
         expect(title).not.toBeNull()
     })
-    it('should be a bar graph', function() {
-
-    })
 })
