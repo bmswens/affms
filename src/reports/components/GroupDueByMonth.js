@@ -43,9 +43,15 @@ function GroupDueByMonth(props) {
                         options={options}
                         data={{
                             labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                            dataset: {
-                                data: data
-                            }
+                            dataset: [
+                                {
+                                    data: data,
+                                    label: 'Members',
+                                    backgroundColor: 'dodgerblue',
+                                    borderColor: 'black',
+                                    borderWidth: 1
+                                }
+                            ]
                         }}
                     />
                 </CardContent>
