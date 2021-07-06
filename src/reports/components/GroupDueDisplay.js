@@ -16,8 +16,8 @@ import { Pie } from 'react-chartjs-2'
 import useStyles from './styles'
 
 function Content(props) {
-    const { tests } = props
-    if (tests === undefined || tests.length === 0) {
+    const { people } = props
+    if (people === undefined || people.length === 0) {
         return (
             <Typography variant="h3">
                 NO DATA
@@ -39,20 +39,26 @@ function Content(props) {
         let dueSoon = 0
         let due = 0
         let overdue = 0
+        let noData = 0
         const now = new Date()
-        for (let test of tests) {
-            let monthDifference = differenceInCalendarMonths(test.nextDue, now)
-            if (monthDifference >= 2) {
-                current += 1
-            }
-            else if (monthDifference === 1) {
-                dueSoon += 1
-            }
-            else if (monthDifference === 0) {
-                due += 1
+        for (let person of people) {
+            if (person.lastOfficial === undefined) {
+                noData += 1
             }
             else {
-                overdue += 1
+                let monthDifference = differenceInCalendarMonths(person.lastOfficial.nextDue, now)
+                if (monthDifference >= 2) {
+                    current += 1
+                }
+                else if (monthDifference === 1) {
+                    dueSoon += 1
+                }
+                else if (monthDifference === 0) {
+                    due += 1
+                }
+                else {
+                    overdue += 1
+                }
             }
         }
         return (
@@ -63,26 +69,30 @@ function Content(props) {
                         "Current",
                         "Due Soon",
                         "Due",
-                        "Overdue"
+                        "Overdue",
+                        "NO DATA"
                     ],
                     datasets: [{
                         labels: [
                             "Current",
                             "Due Soon",
                             "Due",
-                            "Overdue"
+                            "Overdue",
+                            "NO DATA"
                         ],
                         data: [
                             current,
                             dueSoon,
                             due,
-                            overdue
+                            overdue,
+                            noData
                         ],
                         backgroundColor: [
                             "green",
                             "yellow",
                             "orange",
-                            "red"
+                            "red",
+                            "orangered"
                         ]
                     }]
                 }}
@@ -94,7 +104,7 @@ function Content(props) {
 
 function GroupDueDisplay(props) {
 
-    const { tests } = props
+    const { people } = props
     const classes = useStyles()
 
     return (
@@ -105,7 +115,7 @@ function GroupDueDisplay(props) {
                 />
                 <CardContent>
                     <Content
-                        tests={tests}
+                        people={people}
                     />
                 </CardContent>
             </Card>

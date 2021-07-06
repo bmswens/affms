@@ -13,11 +13,40 @@ import { subMonths, addMonths } from 'date-fns'
 // to test
 import GroupDueDisplay from './GroupDueDisplay'
 
+const people = [
+    {
+        lastOfficial: {
+            nextDue: addMonths(new Date(), 2),
+            score: 90.2
+        }
+    },
+    {
+        lastOfficial: {
+            nextDue: addMonths(new Date(), 1),
+            score: 85
+        }
+    },
+    {
+        lastOfficial: {
+            nextDue: new Date(),
+            score: 79
+        }
+    },
+    {
+        lastOfficial: {
+            nextDue: subMonths(new Date(), 1),
+            score: 65
+        }
+    },
+    {
+        lastOfficial: undefined
+    }
+]
+
 describe('<GroupDueDisplay> without tests', function() {
     beforeEach(() => {
         render(
             <GroupDueDisplay
-                tests={[]}
             />
         )
     })
@@ -35,20 +64,7 @@ describe('<GroupDueDisplay> with tests', function() {
     beforeEach(() => {
         render(
             <GroupDueDisplay
-                tests={[
-                    {
-                        nextDue: addMonths(new Date(), 2)
-                    },
-                    {
-                        nextDue: addMonths(new Date(), 1)
-                    },
-                    {
-                        nextDue: new Date()
-                    },
-                    {
-                        nextDue: subMonths(new Date(), 1)
-                    }
-                ]}
+                people={people}
             />
         )
     })
@@ -56,3 +72,7 @@ describe('<GroupDueDisplay> with tests', function() {
 
     })
 })
+
+export {
+    people
+}

@@ -5,13 +5,14 @@ import {
     screen
 } from '@testing-library/react'
 
+import { people } from './GroupDueDisplay.test'
+
 import GroupLevelDisplay from './GroupLevelDisplay'
 
 describe('<GroupLevelDisplay> without tests', function() {
     beforeEach(() => {
         render(
             <GroupLevelDisplay
-                tests={[]}
             />
         )
     })
@@ -29,20 +30,7 @@ describe('<GroupLevelDisplay> with tests', function() {
     beforeEach(() => {
         render(
             <GroupLevelDisplay
-                tests={[
-                    {
-                        score: 90.2
-                    },
-                    {
-                        score: 85
-                    },
-                    {
-                        score: 79
-                    },
-                    {
-                        score: 65
-                    }
-                ]}
+                people={people}
             />
         )
     })
