@@ -6,7 +6,9 @@ import {
     Typography,
     CardContent,
     Grid,
-    Card
+    Card,
+    useMediaQuery,
+    useTheme
 } from '@material-ui/core'
 // Date stuff
 import { differenceInCalendarMonths } from 'date-fns';
@@ -17,6 +19,8 @@ import useStyles from './styles'
 
 function Content(props) {
     const { people } = props
+    const theme = useTheme()
+    const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
     if (people === undefined || people.length === 0) {
         return (
             <Typography variant="h3">
@@ -25,10 +29,14 @@ function Content(props) {
         )
     }
     else {
+        let aspectRatio = 2
+        if (isSmall) {
+            aspectRatio = 1
+        }
         const options = {
             responsive: true,
             maintainAspectRatio: true,
-            aspectRatio: 1,
+            aspectRatio: aspectRatio,
             plugins: {
                 legend: {
                     display: true
