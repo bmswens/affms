@@ -125,6 +125,32 @@ const TestTable = {
     }
 }
 
+const OrgTable = {
+    getByOrg: async function(org) {
+        let output 
+        if (org === "All") {
+            output = await db.people.toArray()
+        }
+        else {
+            output = await db.people.where({organization: org}).toArray()
+        }
+        for (let person of output) {
+            person.tests = await TestTable.getByPerson(person)
+        }
+        return output
+    },
+    getAll: async function() {
+        let output = []
+        let people = await db.people.toArray()
+        for (let person of people) {
+            if (!output.includes(person.organization) && person.organization !== undefined) {
+                output.push(person.organization)
+            }
+        }
+        return output
+    }
+}
+
 async function ready() {
     let components = [
         "run",
@@ -150,6 +176,7 @@ const DB = {
     PushScoresheet: PushScoresheet,
     SitScoresheet: SitScoresheet,
     TestTable: TestTable,
+    OrgTable: OrgTable,
     ready: ready
 }
 

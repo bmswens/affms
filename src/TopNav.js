@@ -130,7 +130,7 @@ function MenuButton(props) {
                         </ListItemText>
                     </MenuItem>
                 </Link>
-                <Link to="/reports" className={classes.title}>
+                <Link to="/single-reports" className={classes.title}>
                     <MenuItem
                         onClick={close}
                     >
@@ -142,17 +142,18 @@ function MenuButton(props) {
                         </ListItemText>
                     </MenuItem>
                 </Link>
-                <MenuItem
-                    onClick={close}
-                    disabled
-                >
-                    <ListItemIcon>
-                        <PieChartIcon fontSize="large" />
-                    </ListItemIcon>
-                    <ListItemText>
-                        Group Reports
-                    </ListItemText>
-                </MenuItem>
+                <Link to="/group-reports" className={classes.title}>
+                    <MenuItem
+                        onClick={close}
+                    >
+                        <ListItemIcon>
+                            <PieChartIcon fontSize="large" />
+                        </ListItemIcon>
+                        <ListItemText>
+                            Group Reports
+                        </ListItemText>
+                    </MenuItem>
+                </Link>
                 <NiceDivider text="USAF Links" />
                 <ExternalLink
                     link="https://affms.us.af.mil/"

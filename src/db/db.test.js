@@ -194,6 +194,9 @@ describe('The Test Table', function() {
         await db.TestTable.clear()
         await db.TestTable.add(testInput)
     })
+    afterAll(async () => {
+        await db.TestTable.clear()
+    })
     it('should allow a user to read and write to the database', async function() {
         let tests = await db.TestTable.all()
         expect(tests.length).toEqual(1)
@@ -230,5 +233,56 @@ describe('The Test Table', function() {
     it('should return the test when adding', async function() {
         let newTest = await db.TestTable.add(testInput)
         expect(newTest.score).toEqual(97.2)
+    })
+})
+
+describe('The OrgTable', function() {
+
+    beforeAll(async () => {
+        await db.PersonTable.add({
+            ...person,
+            organization: "dev"
+        })
+        await db.PersonTable.add({
+            firstname: "Jane",
+            lastname: "Doe",
+            birthdate: new Date(),
+            gender: "female",
+            organization: "non-dev"
+        })
+        await db.TestTable.add(testInput)
+    })
+    afterAll(async () => {
+        await db.PersonTable.clear()
+        await db.TestTable.clear()
+    })
+    it('should return a list of all people with attached tests when searching "All"', async function() {
+        let results = await db.OrgTable.getByOrg('All')
+        expect(results).toHaveLength(2)
+        for (let person of results) {
+            expect(person instanceof Person).toBeTruthy()
+            if (person.firstname === "John") {
+                expect(person.tests).toHaveLength(1)
+            }
+            else {
+                expect(person.tests).toHaveLength(0)
+            }
+        }
+    })
+    it('should filter the list based on org', async function() {
+        let results = await db.OrgTable.getByOrg('dev')
+        expect(results).toHaveLength(1)
+        let person = results[0]
+        expect(person.firstname).toEqual('John')
+    })
+    it('should be able to get all unique organizations', async function() {
+        let expected = [
+            "dev",
+            "non-dev"
+        ]
+        let results = await db.OrgTable.getAll()
+        for (let value of expected) {
+            expect(results.includes(value)).toBeTruthy()
+        }
     })
 })
