@@ -4,11 +4,7 @@ import {
     render,
     screen
 } from '@testing-library/react'
-
-import {
-    addMonths,
-    subMonths
-} from 'date-fns'
+import { people } from './GroupDueDisplay.test'
 
 import GroupDueByMonth from './GroupDueByMonth'
 
@@ -17,20 +13,7 @@ describe('<GroupDueByMonth>', function() {
     beforeEach(() => {
         render(
             <GroupDueByMonth
-                tests={[
-                    {
-                        nextDue: addMonths(new Date(), 2)
-                    },
-                    {
-                        nextDue: addMonths(new Date(), 1)
-                    },
-                    {
-                        nextDue: new Date()
-                    },
-                    {
-                        nextDue: subMonths(new Date(), 1)
-                    }
-                ]}
+                people={people}
             />
         )
     })

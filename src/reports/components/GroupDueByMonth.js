@@ -14,7 +14,7 @@ import useStyles from './styles'
 
 function GroupDueByMonth(props) {
 
-    const { tests } = props
+    const { people } = props
     const classes = useStyles()
 
     const options = {
@@ -29,7 +29,11 @@ function GroupDueByMonth(props) {
         },
     };
     const data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    for (let test of tests) {
+    for (let person of people) {
+        let test = person.lastOfficial
+        if (test === undefined) {
+            continue
+        }
         data[test.nextDue.getMonth()] += 1
     }
     return (
