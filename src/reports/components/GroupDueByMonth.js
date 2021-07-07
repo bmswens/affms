@@ -19,13 +19,16 @@ function GroupDueByMonth(props) {
 
     const options = {
         scales: {
-            yAxes: [
-                {
-                    ticks: {
-                        beginAtZero: true,
-                    },
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {if (value % 1 === 0) {return value}}
                 },
-            ],
+                max: people.length
+            },
+            x: {
+                beginAtZero: true,
+            }
         },
     };
     const data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -47,7 +50,7 @@ function GroupDueByMonth(props) {
                         options={options}
                         data={{
                             labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                            dataset: [
+                            datasets: [
                                 {
                                     data: data,
                                     label: 'Members',

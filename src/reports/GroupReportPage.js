@@ -5,10 +5,12 @@ import {
     Grid
 } from '@material-ui/core'
 
+// components
 import GroupDueDisplay from './components/GroupDueDisplay'
 import GroupLevelDisplay from './components/GroupLevelDisplay'
 import GroupDueByMonth from './components/GroupDueByMonth'
 import StrengthAndWeaknesses from './components/StrengthAndWeakness'
+import OrgSelector from './OrgSelector'
 
 import db from '../db/db'
 
@@ -52,7 +54,9 @@ function GroupReport(props) {
             <Grid
                 container
                 spacing={1}
-
+                style={{ marginTop: 5, paddingLeft: 7, paddingRight: 7 }}
+                alignItems="stretch" 
+                align="center"
             >
                 <div
                     data-testid="group-reports-status"
@@ -79,7 +83,19 @@ function GroupReport(props) {
 
 function GroupReportPage(props) {
 
-    return null
+    const [target, setTarget] = React.useState(null)
+
+    return(
+        <React.Fragment>
+            <OrgSelector
+                target={target}
+                setTarget={setTarget}
+            />
+            <GroupReport
+                target={target}
+            />
+        </React.Fragment>
+    )
 }
 
 export default GroupReportPage

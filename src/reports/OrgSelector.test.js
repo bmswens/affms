@@ -10,6 +10,14 @@ import {
 
 import OrgSelector from './OrgSelector'
 
+async function waitForOrgSelector() {
+    await waitFor(() => {
+        let statusDiv = screen.getByTestId('org-selector-status')
+        let text = within(statusDiv).queryByText('loaded')
+        expect(text).not.toBeNull()
+    })
+}
+
 describe('<OrgSelector>', function() {
     let value
     let setValue
@@ -22,11 +30,7 @@ describe('<OrgSelector>', function() {
                 setTarget={setValue}
             />
         )
-        await waitFor(() => {
-            let statusDiv = screen.getByTestId('org-selector-status')
-            let text = within(statusDiv).queryByText('loaded')
-            expect(text).not.toBeNull()
-        })
+        await waitForOrgSelector()
     })
     it('should allow the user to select a target org', function() {
         const input = screen.getByRole('textbox')
@@ -36,3 +40,7 @@ describe('<OrgSelector>', function() {
         expect(input.value).toEqual('dev')
     })
 })
+
+export {
+    waitForOrgSelector
+}

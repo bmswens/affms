@@ -143,7 +143,7 @@ const OrgTable = {
         let output = []
         let people = await db.people.toArray()
         for (let person of people) {
-            if (!output.includes(person.organization)) {
+            if (!output.includes(person.organization) && person.organization !== undefined) {
                 output.push(person.organization)
             }
         }

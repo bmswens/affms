@@ -20,6 +20,7 @@ function OrgSelector(props) {
     React.useEffect(() => {
         db.OrgTable.getAll()
             .then(resp => {
+                resp.unshift('All')
                 setOrgs(resp)
                 setStatus('loaded')
             })
@@ -38,26 +39,28 @@ function OrgSelector(props) {
             >
                 {status}
             </div>
-            <Paper
-                style={{ paddingLeft: 7, paddingRight: 7 }}
-            >
-                <Grid container spacing={1}>
-                    <Grid item xs/>
-                    <Grid item xs={8}>
-                        <Autocomplete
-                            id="org-selector-box"
-                            options={orgs}
-                            getOptionLabel={org => `${org}`}
-                            renderInput={(params) => <TextField {...params} label="Target" variant="outlined" />}
-                            value={target}
-                            onChange={(event, newInputValue) => {
-                                setTarget(newInputValue)
-                            }}
-                        />
+            <Grid item xs={12}>
+                <Paper
+                    style={{ paddingLeft: 7, paddingRight: 7 }}
+                >
+                    <Grid container spacing={1}>
+                        <Grid item xs/>
+                        <Grid item xs={8}>
+                            <Autocomplete
+                                id="org-selector-box"
+                                options={orgs}
+                                getOptionLabel={org => `${org}`}
+                                renderInput={(params) => <TextField {...params} label="Target" variant="outlined" />}
+                                value={target}
+                                onChange={(event, newInputValue) => {
+                                    setTarget(newInputValue)
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs/>
                     </Grid>
-                    <Grid item xs/>
-                </Grid>
-            </Paper>
+                </Paper>
+            </Grid>
         </Grid>
     )
 }

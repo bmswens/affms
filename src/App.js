@@ -13,6 +13,7 @@ import Homepage from './Homepage'
 import PersonList from './people/PeoplePage'
 import SingleReportPage from './reports/SingleReportPage'
 import Footer from './Footer'
+import GroupReportPage from './reports/GroupReportPage';
 
 
 function App() {
@@ -30,7 +31,10 @@ function App() {
       <BrowserRouter>
         <TopNav />
         <Switch>
-          <Route path="/reports">
+          <Route path="/group-reports">
+            <GroupReportPage />
+          </Route>
+          <Route path="/single-reports">
             <SingleReportPage />
           </Route>
           <Route path="/people">
