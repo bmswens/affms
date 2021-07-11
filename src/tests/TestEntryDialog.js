@@ -54,7 +54,7 @@ function cleanTime(time) {
 
 function OfficialSection(props) {
 
-    const {entry, setEntry } = props
+    const { entry, setEntry } = props
 
     if (entry.testee?.firstname === "Ad" && entry.testee?.lastname === "Hoc") {
         return null
@@ -81,8 +81,118 @@ function OfficialSection(props) {
             </FormControl>
         )
     }
+}
 
+function GenderSection(props) {
 
+    const {
+        entry,
+        setEntry,
+        isAdHoc
+    } = props
+
+    if (isAdHoc) {
+        return (
+            <FormControl variant="outlined" fullWidth required style={{ marginTop: 7 }}>
+                <InputLabel id="gender-label">Gender</InputLabel>
+                <Select
+                    aria-labelledby="gender-label"
+                    aria-label="Gender"
+                    id="gender-select"
+                    value={entry.testee?.gender || ''}
+                    onChange={(event) => {
+                        setEntry({
+                            ...entry,
+                            testee: {
+                                ...entry.testee,
+                                gender: event.target.value
+                            }
+                        })
+                    }}
+                    label="Gender"
+                >
+                    <MenuItem value={'male'}>Male</MenuItem>
+                    <MenuItem value={'female'}>Female</MenuItem>
+                </Select>
+            </FormControl>
+        )
+    }
+    else {
+        return null
+    }
+}
+
+function AgeSection(props) {
+
+    const {
+        entry,
+        setEntry,
+        isAdHoc
+    } = props
+
+    if (isAdHoc) {
+        return (
+            <TextField
+                required
+                style={{ marginTop: 7 }}
+                variant="outlined"
+                label="Age"
+                id="age-field"
+                fullWidth
+                value={entry.testee?.age || ''}
+                onChange={(event) => {
+                    setEntry({
+                        ...entry,
+                        testee: {
+                            ...entry.testee,
+                            age: event.target.value
+                        }
+                    })
+                }}
+                error={Boolean(entry.testee?.age) && Number.isNaN(Number(entry.testee?.age))}
+            />
+        )
+    }
+    else {
+        return null
+    }
+}
+
+function DateSection(props) {
+
+    const {
+        entry,
+        setEntry,
+        isAdHoc
+    } = props
+
+    if (!isAdHoc) {
+        return (
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                    margin="normal"
+                    id="date-select-dialog"
+                    fullWidth
+                    inputVariant="outlined"
+                    label="Date"
+                    format="MM/dd/yyyy"
+                    value={entry.date || ''}
+                    onChange={(date) => {
+                        setEntry({
+                            ...entry,
+                            date: date
+                        })
+                    }}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                    }}
+                />
+            </MuiPickersUtilsProvider>
+        )
+    }
+    else {
+        return null
+    }
 }
 
 
@@ -175,61 +285,7 @@ function TestEntryDialog(props) {
         setFeedbackOpen(true)
     }
 
-    const [genderField, setGenderField] = React.useState(null)
-    const [ageField, setAgeField] = React.useState(null)
-    React.useEffect(() => {
-        if (entry.testee?.firstname === 'Ad' && entry.testee?.lastname === 'Hoc') {
-            setGenderField((
-                <FormControl variant="outlined" fullWidth required style={{ marginTop: 7 }}>
-                    <InputLabel id="gender-label">Gender</InputLabel>
-                    <Select
-                        aria-labelledby="gender-label"
-                        aria-label="Gender"
-                        id="gender-select"
-                        value={entry.testee?.gender || ''}
-                        onChange={(event) => {
-                            setEntry({
-                                ...entry,
-                                testee: {
-                                    ...entry.testee,
-                                    gender: event.target.value
-                                }
-                            })
-                        }}
-                        label="Gender"
-                    >
-                        <MenuItem value={'male'}>Male</MenuItem>
-                        <MenuItem value={'female'}>Female</MenuItem>
-                    </Select>
-                </FormControl>
-            ))
-            setAgeField((
-                <TextField
-                    required
-                    style={{ marginTop: 7 }}
-                    variant="outlined"
-                    label="Age"
-                    id="age-field"
-                    fullWidth
-                    value={entry.testee?.age || ''}
-                    onChange={(event) => {
-                        setEntry({
-                            ...entry,
-                            testee: {
-                                ...entry.testee,
-                                age: event.target.value
-                            }
-                        })
-                    }}
-                    error={Boolean(entry.testee?.age) && Number.isNaN(Number(entry.testee?.age))}
-                />
-            ))
-        }
-        else {
-            setGenderField(null)
-            setAgeField(null)
-        }
-    }, [entry])
+    let isAdHoc = entry.testee?.firstname === "Ad" && entry.testee?.lastname == "Hoc"
 
     return (
         <React.Fragment>
@@ -266,28 +322,21 @@ function TestEntryDialog(props) {
                         }}
                         value={entry.testee || null}
                     />
-                    {genderField}
-                    {ageField}
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                            margin="normal"
-                            id="date-select-dialog"
-                            fullWidth
-                            inputVariant="outlined"
-                            label="Date"
-                            format="MM/dd/yyyy"
-                            value={entry.date || ''}
-                            onChange={(date) => {
-                                setEntry({
-                                    ...entry,
-                                    date: date
-                                })
-                            }}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                            }}
-                        />
-                    </MuiPickersUtilsProvider>
+                    <GenderSection
+                        entry={entry}
+                        setEntry={setEntry}
+                        isAdHoc={isAdHoc}
+                    />
+                    <AgeSection
+                        entry={entry}
+                        setEntry={setEntry}
+                        isAdHoc={isAdHoc}
+                    />
+                    <DateSection
+                        entry={entry}
+                        setEntry={setEntry}
+                        isAdHoc={isAdHoc}
+                    />
                     <OfficialSection
                         setEntry={setEntry}
                         entry={entry}

@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
 
 function PointsChart(props) {
     let { points, total } = props
+    if (points === "exempt") {
+        points = 0
+    }
     let remainder = total - points
 
     const options = {
@@ -76,7 +79,10 @@ function TrendingIcon(props) {
     const { oldPoints, newPoints } = props
     const classes = useStyles()
 
-    if (oldPoints > newPoints) {
+    if (newPoints instanceof String) {
+        return null
+    }
+    else if (oldPoints > newPoints) {
         return (
             <TrendingDownIcon className={classes.trendingIcon} style={{ color: "red" }} />
         )
@@ -95,6 +101,14 @@ function PointsDisplay(props) {
     const theme = useTheme()
     const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
 
+    let displayPoints
+    if (newPoints === 'exempt') {
+        displayPoints = newPoints.toUpperCase()
+    }
+    else {
+        displayPoints = newPoints.toFixed(1)
+    }
+
     return (
         <Grid container spacing={1} alignItems="center">
             <Grid item xs={12}>
@@ -104,7 +118,7 @@ function PointsDisplay(props) {
             </Grid>
             <Grid item xs={7}>
                 <Typography variant={isSmall ? "h2" : "h1"} style={{ color: newPoints > minPoints ? "green" : "red" }}>
-                    {newPoints.toFixed(1)}
+                    {displayPoints}
                     <TrendingIcon
                         newPoints={newPoints}
                         oldPoints={oldPoints}
