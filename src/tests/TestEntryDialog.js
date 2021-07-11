@@ -285,7 +285,7 @@ function TestEntryDialog(props) {
         setFeedbackOpen(true)
     }
 
-    let isAdHoc = entry.testee?.firstname === "Ad" && entry.testee?.lastname == "Hoc"
+    let isAdHoc = entry.testee?.firstname === "Ad" && entry.testee?.lastname === "Hoc"
 
     return (
         <React.Fragment>
