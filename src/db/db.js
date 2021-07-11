@@ -61,6 +61,7 @@ const SitScoresheet = {
 
 // Update classes to work with Dexie
 Person.prototype.save = function() {
+    this.lastUpdated = new Date()
     return db.people.put(this)
 }
 db.people.mapToClass(Person)
@@ -68,6 +69,7 @@ db.people.mapToClass(Person)
 const PersonTable = {
     add: async function(data) {
         return db.transaction('rw', db.people, async () => {
+            data.lastUpdated = new Date()
             return await db.people.add(data)
         })
     },

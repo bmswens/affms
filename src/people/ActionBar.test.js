@@ -44,11 +44,6 @@ describe('<ActionBar />', function() {
     it('has a an "Upload New Person" button', async function() {
         let uploadNewButton = screen.getByRole('button', {name: "Upload Person Or People"})
         expect(uploadNewButton).not.toBeNull()
-        fireEvent.click(uploadNewButton)
-        await waitFor(() => {
-            let text = screen.queryByText(/Not Implemented/)
-            expect(text).not.toBeNull()
-        })
     })
     it('should have a "Upload To Cloud" button', async function() {
         let downloadButton = screen.getByRole('button', {name: "Upload To Cloud"})

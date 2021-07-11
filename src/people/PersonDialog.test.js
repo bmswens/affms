@@ -22,7 +22,7 @@ import db from '../db/db'
 const member = {
     firstname: 'John',
     lastname: "Doe",
-    birthdate: Date.parse("2021-06-01"),
+    birthdate: Date.parse("06/01/2021"),
     gender: "male"
 }
 

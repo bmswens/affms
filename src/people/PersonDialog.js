@@ -42,6 +42,8 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
+
+
 function MandatorySection(props) {
 
     const classes = useStyles(props)

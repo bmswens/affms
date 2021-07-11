@@ -15,12 +15,12 @@ import { Card, CardContent, Tooltip } from '@material-ui/core'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
-import PublishIcon from '@material-ui/icons/Publish'
 import GetAppIcon from '@material-ui/icons/GetApp'
 import DeleteSweepIcon from '@material-ui/icons/DeleteSweep';
 
 // custom
 import PersonDialog from './PersonDialog'
+import UploadButton from './UploadButton';
 
 
 function NotImplementedDialog(props) {
@@ -108,14 +108,9 @@ function ActionBar(props) {
                                 <GetAppIcon fontSize={fontSize} />
                             </Button>
                         </Tooltip>
-                        <Tooltip title="Upload Person/People">
-                            <Button
-                                aria-label="Upload Person Or People"
-                                onClick={openNotImplemented}
-                            >
-                                <PublishIcon fontSize={fontSize} />
-                            </Button>
-                        </Tooltip>
+                        <UploadButton 
+                            fontSize={fontSize}
+                        />
                         <Tooltip title="Upload To Cloud">
                             <Button
                                 aria-label="Upload To Cloud"
