@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Dialog from '@material-ui/core/Dialog'
 import { DialogContentText, DialogActions, DialogTitle, DialogContent } from '@material-ui/core'
-import { Card, CardContent } from '@material-ui/core'
+import { Card, CardContent, Tooltip } from '@material-ui/core'
 
 // Icons
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
@@ -84,42 +84,54 @@ function ActionBar(props) {
                     <ButtonGroup
                         variant="contained"
                     >
-                        <Button
-                            aria-label="Delete All People"
-                            onClick={openNotImplemented}
-                        >
-                            <DeleteSweepIcon fontSize={fontSize} />
-                        </Button>
-                        <Button
-                            aria-label="Download From Cloud"
-                            onClick={openNotImplemented}
-                        >
-                            <CloudDownloadIcon fontSize={fontSize} />
-                        </Button>
-                        <Button
-                            aria-label="Download All People"
-                            onClick={openNotImplemented}
-                        >
-                            <GetAppIcon fontSize={fontSize} />
-                        </Button>
-                        <Button
-                            aria-label="Upload Person Or People"
-                            onClick={openNotImplemented}
-                        >
-                            <PublishIcon fontSize={fontSize} />
-                        </Button>
-                        <Button
-                            aria-label="Upload To Cloud"
-                            onClick={openNotImplemented}
-                        >
-                            <CloudUploadIcon fontSize={fontSize} />
-                        </Button>
-                        <Button
-                            aria-label="Add New Person"
-                            onClick={() => setNewPersonDialogOpen(true)}
-                        >
-                            <PersonAddIcon fontSize={fontSize} />
-                        </Button>
+                        <Tooltip title="Delete All">
+                            <Button
+                                aria-label="Delete All People"
+                                onClick={openNotImplemented}
+                            >
+                                <DeleteSweepIcon fontSize={fontSize} />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Download From Cloud">
+                            <Button
+                                aria-label="Download From Cloud"
+                                onClick={openNotImplemented}
+                            >
+                                <CloudDownloadIcon fontSize={fontSize} />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Download All">
+                            <Button
+                                aria-label="Download All People"
+                                onClick={openNotImplemented}
+                            >
+                                <GetAppIcon fontSize={fontSize} />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Upload Person/People">
+                            <Button
+                                aria-label="Upload Person Or People"
+                                onClick={openNotImplemented}
+                            >
+                                <PublishIcon fontSize={fontSize} />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Upload To Cloud">
+                            <Button
+                                aria-label="Upload To Cloud"
+                                onClick={openNotImplemented}
+                            >
+                                <CloudUploadIcon fontSize={fontSize} />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Add New Person">
+                            <Button
+                                aria-label="Add New Person"
+                                onClick={() => setNewPersonDialogOpen(true)}
+                            >
+                                <PersonAddIcon fontSize={fontSize} />
+                            </Button>
+                        </Tooltip>
                     </ButtonGroup>
                     <PersonDialog
                         open={newPersonDialogOpen}

@@ -15,6 +15,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider'
+import {
+    Tooltip
+} from '@material-ui/core'
 
 // Material UI Icons
 import MenuIcon from '@material-ui/icons/Menu';
@@ -103,15 +106,17 @@ function MenuButton(props) {
 
     return (
         <React.Fragment>
-            <IconButton
-                edge="start"
-                className={classes.menuButton}
-                color="inherit"
-                aria-label="menu"
-                onClick={event => setAnchorEl(event.currentTarget)}
-            >
-                <MenuIcon />
-            </IconButton>
+            <Tooltip title="Main Menu">
+                <IconButton
+                    edge="start"
+                    className={classes.menuButton}
+                    color="inherit"
+                    aria-label="menu"
+                    onClick={event => setAnchorEl(event.currentTarget)}
+                >
+                    <MenuIcon />
+                </IconButton>
+            </Tooltip>
             <Menu
                 anchorEl={anchorEl}
                 keepMounted
@@ -192,9 +197,11 @@ function TopNav() {
                         </Typography>
                     </Link>
                     <div style={{ flexGrow: 1 }} />
-                    <IconButton color="inherit" aria-label="Add New Test Entry" onClick={() => { setOpen(true) }}>
-                        <PostAddIcon fontSize="large" />
-                    </IconButton>
+                    <Tooltip title="Add/Score Test">
+                        <IconButton color="inherit" aria-label="Add New Test Entry" onClick={() => { setOpen(true) }}>
+                            <PostAddIcon fontSize="large" />
+                        </IconButton>
+                    </Tooltip>
                 </Toolbar>
             </AppBar>
             <TestEntryDialog

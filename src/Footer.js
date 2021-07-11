@@ -7,6 +7,9 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
+import {
+    Tooltip
+} from '@material-ui/core'
 
 // Icons
 import EmailIcon from '@material-ui/icons/Email'
@@ -32,32 +35,38 @@ function Footer(props) {
                         <Typography>
                             © {currentYear} Brandon Swenson
                         </Typography>
-                        <IconButton
-                            aria-label="Contact Us"
-                        >
-                            <EmailIcon />
-                        </IconButton>
+                        <Tooltip title="Contact Us">
+                            <IconButton
+                                aria-label="Contact Us"
+                            >
+                                <EmailIcon />
+                            </IconButton>
+                        </Tooltip>
                         <a
                             href="https://github.com/bmswens/affms"
                             target="_blank"
                             rel="noreferrer"
                         >
-                            <IconButton
-                                aria-label="Find Us On Github"
-                            >
-                                <GitHubIcon />
-                            </IconButton>
+                            <Tooltip title="Find Us On Github">
+                                <IconButton
+                                    aria-label="Find Us On Github"
+                                >
+                                    <GitHubIcon />
+                                </IconButton>
+                            </Tooltip>
                         </a>
                         <a
                             href="https://github.com/bmswens/affms/issues/new"
                             target="_blank"
                             rel="noreferrer"
                         >
-                            <IconButton
-                                aria-label="Report A Bug"
-                            >
-                                <BugReportIcon />
-                            </IconButton>
+                            <Tooltip title="Report A Bug / Request A Feature">
+                                <IconButton
+                                    aria-label="Report A Bug"
+                                >
+                                    <BugReportIcon />
+                                </IconButton>
+                            </Tooltip>
                         </a>
                     </CardContent>
                 </Card>

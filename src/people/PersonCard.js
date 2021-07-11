@@ -6,7 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { CardActions } from '@material-ui/core';
+import { 
+    CardActions,
+    Tooltip
+ } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 
 // Material UI Icons
@@ -88,12 +91,14 @@ function PersonCard(props) {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <IconButton
-                            onClick={() => setOpenDelete(true)}
-                            aria-label={`Delete ${person.firstname} ${person.lastname} `}
-                        >
-                            <DeleteForeverIcon fontSize="large" />
-                        </IconButton>
+                        <Tooltip title="Delete">
+                            <IconButton
+                                onClick={() => setOpenDelete(true)}
+                                aria-label={`Delete ${person.firstname} ${person.lastname} `}
+                            >
+                                <DeleteForeverIcon fontSize="large" />
+                            </IconButton>
+                        </Tooltip>
                         <div style={{ flexGrow: 1 }} />
                         <a 
                             id={`download-${person.firstname}-${person.lastname}-hidden-button`}
@@ -105,24 +110,30 @@ function PersonCard(props) {
                         >
                             Hidden Download Anchor
                         </a>
-                        <IconButton
-                            onClick={handleDownload}
-                            aria-label={`Download ${person.firstname} ${person.lastname} `}
-                        >
-                            <CloudDownloadIcon fontSize="large" />
-                        </IconButton>
-                        <IconButton
-                            onClick={() => setOpenEdit(true)}
-                            aria-label={`Edit ${person.firstname} ${person.lastname} `}
-                        >
-                            <EditIcon fontSize="large" />
-                        </IconButton>
-                        <IconButton
-                            onClick={() => setOpenTest(true)}
-                            aria-label={`Add New Test For ${person.firstname} ${person.lastname} `}
-                        >
-                            <PostAddIcon fontSize="large" />
-                        </IconButton>
+                        <Tooltip title="Download">
+                            <IconButton
+                                onClick={handleDownload}
+                                aria-label={`Download ${person.firstname} ${person.lastname} `}
+                            >
+                                <CloudDownloadIcon fontSize="large" />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Edit">
+                            <IconButton
+                                onClick={() => setOpenEdit(true)}
+                                aria-label={`Edit ${person.firstname} ${person.lastname} `}
+                            >
+                                <EditIcon fontSize="large" />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Add New Test">
+                            <IconButton
+                                onClick={() => setOpenTest(true)}
+                                aria-label={`Add New Test For ${person.firstname} ${person.lastname} `}
+                            >
+                                <PostAddIcon fontSize="large" />
+                            </IconButton>
+                        </Tooltip>
                     </CardActions>
                 </Card>
             </Grid>

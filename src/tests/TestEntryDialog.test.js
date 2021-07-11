@@ -187,9 +187,46 @@ describe('<TestEntryDialog /> Ad Hoc', function() {
             expect(screen.queryByText(/Results/)).not.toBeNull()
         })
     })
+    it('should be able to submit ad hoc exempt', async function() {
+        let submissions = [
+            {
+                field: "Push-ups",
+                value: "exempt"
+            },
+            {
+                field: "Sit-ups",
+                value: "exempt"
+            },
+            {
+                field: "Run Time",
+                value: "exempt"
+            }
+        ]
+        let submitButton = screen.getByRole('button', {name: 'Submit'})
+        for (let submission of submissions) {
+            expect(submitButton.disabled).toBeTruthy()
+            let input = screen.getByRole('textbox', {name: submission.field})
+            fireEvent.change(input, {target: {value: submission.value}})
+        }
+        expect(submitButton.disabled).toBeTruthy()
+        let ageField = screen.getByRole('textbox', {name: 'Age'})
+        fireEvent.change(ageField, {target: { value: 18}})
+        expect(submitButton.disabled).toBeTruthy()
+        let genderField = screen.queryByLabelText('Gender')
+        fireEvent.change(genderField.querySelector('input'), {target: { value: 'male'}})
+        expect(submitButton.disabled).not.toBeTruthy()
+        fireEvent.click(submitButton)
+        await waitFor(async () => {
+            expect(screen.queryByText(/Results/)).not.toBeNull()
+        })
+    })
     it('should remove the "official" field', function() {
         let officialSection = screen.queryByLabelText('Official Test')
         expect(officialSection).toBeNull()
+    })
+    it('should remove the "date" field', function() {
+        let dateSection = screen.queryByLabelText('Date')
+        expect(dateSection).toBeNull()
     })
 })
 
