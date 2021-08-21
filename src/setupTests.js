@@ -10,6 +10,7 @@ import db from './db/db'
 
 // Fake our self-hosted .csv
 import { server } from './mocks/server.js'
+import { DataUsageRounded } from '@material-ui/icons';
 beforeAll(async() => {
     jest.setTimeout(10000)
     server.listen()
@@ -30,3 +31,9 @@ jest.mock('react-chartjs-2', () => ({
 // for download testing
 global.URL.createObjectURL = jest.fn(() => 'fakeURL')
 global.URL.revokeObjectURL = jest.fn(() => 'fakeURL')
+global.makeFile = (data, name, type) => {
+    let file = new Blob([""], {type: type})
+    file.name = name
+    file.text = () => data
+    return file
+}

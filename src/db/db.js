@@ -24,6 +24,21 @@ db.on("ready", async function() {
     }
 })
 
+async function ready() {
+    let components = [
+        "run",
+        "sit",
+        "push"
+    ]
+    for (let component of components) {
+        let data = await db[component].toArray()
+        if (!data.length) {
+            return false
+        }
+    }
+    return true
+}
+
 async function score(table, gender, age, count) {
     let results = await table
     .where("gender").equals(gender)
@@ -60,9 +75,10 @@ const SitScoresheet = {
 }
 
 // Update classes to work with Dexie
-Person.prototype.save = function() {
+Person.prototype.save = async function() {
     this.lastUpdated = new Date()
-    return db.people.put(this)
+    let response = await db.people.put(this)
+    return response
 }
 db.people.mapToClass(Person)
 
@@ -78,7 +94,12 @@ const PersonTable = {
         return people 
     },
     query: async function(params) {
-        let output = await db.people.where(params).toArray()
+        let output = []
+        let results = await db.people.where(params)
+        let count = await results.count()
+        if (count) {
+            output = results.toArray()
+        }
         return output
     },
     clear: async function() {
@@ -124,6 +145,9 @@ const TestTable = {
         }
         tests = tests.sort(sortByDate)
         return tests
+    },
+    deleteByPerson: async function(person) {
+        await db.tests.where({firstname: person.firstname, lastname: person.lastname}).delete()
     }
 }
 
@@ -151,21 +175,6 @@ const OrgTable = {
         }
         return output
     }
-}
-
-async function ready() {
-    let components = [
-        "run",
-        "sit",
-        "push"
-    ]
-    for (let component of components) {
-        let data = await db[component].toArray()
-        if (!data.length) {
-            return false
-        }
-    }
-    return true
 }
 
 function sortByDate(a, b) {

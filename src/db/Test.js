@@ -27,6 +27,9 @@ class Test {
         for (let key in object) {
             this[key] = object[key]
         }
+        if (!(object.date instanceof Date)) {
+            this.date = new Date(Date.parse(object.date))
+        }
     }
     async calculateScore() {
         let total = 100

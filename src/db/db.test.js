@@ -234,6 +234,17 @@ describe('The Test Table', function() {
         let newTest = await db.TestTable.add(testInput)
         expect(newTest.score).toEqual(97.2)
     })
+    it('should allow the user to delete by person', async function() {
+        await db.TestTable.deleteByPerson({
+            firstname: "John",
+            lastname: "Doe"
+        })
+        let tests = await db.TestTable.getByPerson({
+            firstname: "John",
+            lastname: "Doe"
+        })
+        expect(tests).toHaveLength(0)
+    })
 })
 
 describe('The OrgTable', function() {

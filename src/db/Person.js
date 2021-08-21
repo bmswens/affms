@@ -19,6 +19,9 @@ class Person {
         for (let key in object) {
             this[key] = object[key]
         }
+        if (!(object.birthdate instanceof Date)) {
+            this.birthdate = new Date(Date.parse(object.birthdate))
+        }
     }
     getAge() {
         return differenceInYears(new Date(), this.birthdate)
